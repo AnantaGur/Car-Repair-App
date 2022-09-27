@@ -2,7 +2,9 @@
   <div id="app">
     <div id="nav">
       <!-- <img src="@/images/logotransparent.png" alt="black logo" id="black-logo"> -->
-      <span id="black-logo"><h2> FIXXER </h2></span>
+      <router-link :to="{ name: 'home' }" class="black-logo">
+      <span class="black-logo"><h2> FIXXER </h2></span>
+      </router-link>
       <router-link v-bind:to="{ name: 'home' }" class="nav">Home</router-link>
       <!-- &nbsp;|&nbsp; -->
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" class="nav">Logout</router-link>
@@ -16,21 +18,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@300&display=swap');
 
 
-#black-logo {
-  width: 85px;
-  height: 55px;
+.black-logo {
+  width: 65px;
+  height: 50px;
   background-color: black;
   border-radius: 35px 2px;
-  box-shadow: 20px -1px teal;
+  box-shadow: 20px 0px teal;
   color: white;
+  text-decoration: none;
 }
-#black-logo h2 {
+.black-logo h2 {
   
   position: relative;
-  left: 15px;
-  bottom: -1px;
+  left: 10px;
+  bottom: -4px;
   letter-spacing: 2px;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 #nav {

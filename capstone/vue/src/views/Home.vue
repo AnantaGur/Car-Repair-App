@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <div class="container">
+      <span id="banner-img">
       <img src="../images/black-logo.png" alt="banner" class="banner">
+      </span>
     <table>
       <th>SERVICES</th><br>
       <tr>Estimated Schedule <td>This is an estimate on your schedule</td></tr><br>
@@ -29,14 +31,10 @@ export default {
   align-items: center;
   flex-flow: column;
 }
+
 .banner {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  margin-top: 10px;
   width: 25%;
-  background-color: black;
-  padding-left: 100%;
-  padding-right: 100%;
 }
 
 .link {
@@ -59,6 +57,15 @@ table {
   flex-flow: column;
   margin-top: 10vh;
   font-size: 32px;
+}
+
+#banner-img {
+  display: flex;
+  background-color: black;
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;
+  padding-bottom: 10px;
 }
 
 </style>
