@@ -1,5 +1,6 @@
 <template>
   <div id="login" class="text-center">
+    <img src="../images/teal-logo.png" alt="Fixxer logo" class="logo" />
     <form class="form-signin" @submit.prevent="login">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
       <div
@@ -12,7 +13,7 @@
         role="alert"
         v-if="this.$route.query.registration"
       >Thank you for registering, please sign in.</div>
-      <label for="username" class="sr-only">Username</label>
+      <label for="username" class="sr-only"><img src="../images/user.png" alt="user icon" class="login-icon"></label>
       <input
         type="text"
         id="username"
@@ -22,7 +23,7 @@
         required
         autofocus
       />
-      <label for="password" class="sr-only">Password</label>
+      <label for="password" class="sr-only"><img src="../images/lock.png" alt="lock icon" class="login-icon"></label>
       <input
         type="password"
         id="password"
@@ -31,8 +32,8 @@
         v-model="user.password"
         required
       />
-      <router-link :to="{ name: 'register' }">Need an account?</router-link>
-      <button type="submit">Sign in</button>
+      <router-link class="login-link" :to="{ name: 'register' }">Need an account?</router-link>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </form>
   </div>
 </template>
