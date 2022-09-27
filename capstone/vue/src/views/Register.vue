@@ -1,12 +1,14 @@
 <template>
   <div id="register" class="text-center">
-    <img src="../images/logo.png" alt="Fixxer logo" class="logo" />
+    <img src="../images/teal-logo.png" alt="Fixxer logo" class="logo" />
     <form class="form-register" @submit.prevent="register">
       <h1 class="h3 mb-3 font-weight-normal">Create Your Account</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
-      <label for="username" class="sr-only"><img src="../images/user.png" alt="user icon" class="login-icon"></label>
+      <label for="username" class="sr-only"
+        ><img src="../images/user.png" alt="user icon" class="login-icon"
+      /></label>
       <input
         type="text"
         id="username"
@@ -16,7 +18,9 @@
         required
         autofocus
       />
-      <label for="password" class="sr-only"><img src="../images/lock.png" alt="lock icon" class="login-icon"></label>
+      <label for="password" class="sr-only"
+        ><img src="../images/lock.png" alt="lock icon" class="login-icon"
+      /></label>
       <input
         type="password"
         id="password"
@@ -35,7 +39,7 @@
       />
       <router-link :to="{ name: 'login' }" class="login-link"
         >Have an account?</router-link
-      ><br />
+      >
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
       </button>
@@ -94,7 +98,10 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300&display=swap");
+
 .text-center {
+  font-family: "Dosis", sans-serif;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -106,15 +113,13 @@ export default {
 
 div .logo {
   display: flex;
-  width: 30%;
-  height: 30%;
+  width: 50vh;
 }
 
 form {
   display: flex;
   flex-flow: column;
   align-items: center;
-
 }
 
 .login-link {
@@ -132,7 +137,33 @@ form {
 }
 
 .login-icon {
-  width: 10%;
+  width: 8%;
   margin: auto;
+}
+
+.login-link {
+  text-decoration: none;
+  color: black;
+}
+
+.login-link:hover {
+  text-decoration: none;
+  background-color: rgb(40, 131, 131, 0.1);
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.btn {
+  font-family: "Dosis", sans-serif;
+  color: white;
+  background-color: teal;
+  border-radius: 10px;
+  padding: 4px 16px 4px 16px;
+  border: none;
+}
+
+.btn:hover {
+  background-color: rgb(40, 131, 131);
+  opacity: 0.75;
 }
 </style>
