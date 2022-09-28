@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.techelevator.model.ServiceRequest;
 import com.techelevator.model.UserNotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -82,6 +83,7 @@ public class JdbcUserDao implements UserDao {
 
         return jdbcTemplate.update(insertUserSql, username, password_hash, ssRole) == 1;
     }
+
 
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
