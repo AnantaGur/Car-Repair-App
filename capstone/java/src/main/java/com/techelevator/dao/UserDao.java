@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.ServiceRequest;
 import com.techelevator.model.User;
 
 import java.util.List;
@@ -15,4 +16,15 @@ public interface UserDao {
     int findIdByUsername(String username);
 
     boolean create(String username, String password, String role);
+
+
+
+    /*
+    user should be able to see request submitted
+    includes everything, vehicle, contact info, and service requested
+    */
+
+    /*
+    user should be able to see repair estimate info
+     */
 }

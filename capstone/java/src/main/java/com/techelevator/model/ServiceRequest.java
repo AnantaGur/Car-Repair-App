@@ -13,6 +13,9 @@ public class ServiceRequest {
     private int userId;
     private String requestStatus;
 
+    public ServiceRequest(){
+    }
+
     public ServiceRequest(String vehicleMake, String vehicleModel, String vehicleColor, int vehicleYear, String serviceName, String fullName, String phoneNumber, String email, int requestId, int userId, String requestStatus) {
         this.vehicleMake = vehicleMake;
         this.vehicleModel = vehicleModel;
