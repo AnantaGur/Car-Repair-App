@@ -7,7 +7,7 @@ import java.util.List;
 public interface ServiceRequestDao {
     //getStatus for user
 
-    ServiceRequest createRequest (ServiceRequest serviceRequest);
+    ServiceRequest createRequest (ServiceRequest serviceRequest, int userId);
 
     ServiceRequest getServiceRequest (int requestId);
 

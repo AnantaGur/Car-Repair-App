@@ -1,6 +1,10 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.context.annotation.PropertySource;
+
 public class ServiceRequest {
+
     private String vehicleMake;
     private String vehicleModel;
     private String vehicleColor;

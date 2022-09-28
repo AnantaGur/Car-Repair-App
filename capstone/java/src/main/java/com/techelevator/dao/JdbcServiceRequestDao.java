@@ -1,29 +1,34 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.ServiceRequest;
+import com.techelevator.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcServiceRequestDao implements ServiceRequestDao{
 
     private final JdbcTemplate jdbcTemplate;
+    private final UserDao userDao;
 
-    public JdbcServiceRequestDao(JdbcTemplate jdbcTemplate) {
+    public JdbcServiceRequestDao(JdbcTemplate jdbcTemplate, UserDao userDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userDao = userDao;
     }
 
     @Override
-    public ServiceRequest createRequest(ServiceRequest serviceRequest) {
+    public ServiceRequest createRequest(ServiceRequest serviceRequest, int userId) {
         ServiceRequest createdRequest = new ServiceRequest();
         String sql = "INSERT INTO service_request " +
                 "(vehicle_make, vehicle_model, vehicle_color, vehicle_year, service_name, full_name, phone_number, email, user_id)" +
                 " VALUES (?, ?, ?, ?, ? , ?, ?, ?, ?) RETURNING request_id;";
         Integer serviceRequestId = jdbcTemplate.queryForObject(sql, Integer.class, serviceRequest.getVehicleMake(), serviceRequest.getVehicleModel(),
                 serviceRequest.getVehicleColor(), serviceRequest.getVehicleYear(), serviceRequest.getServiceName(), serviceRequest.getFullName(),
-                serviceRequest.getPhoneNumber(), serviceRequest.getEmail(), serviceRequest.getUserId());
+                serviceRequest.getPhoneNumber(), serviceRequest.getEmail(), userId);
 
         return getServiceRequest(serviceRequestId);
     }
