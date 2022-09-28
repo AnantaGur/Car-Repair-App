@@ -17,73 +17,15 @@
         </option>
         <option value="tire-change" id="tire-change">Tire Change</option>
       </select>
-      <div id="ifOil" v-if="selected === 'oil-change'">
-        <label for="oil-cost">Parts Cost:</label>
-        <input
-          type="text"
-          id="oil-cost"
-          name="oil-cost"
-          required
-          disabled
-          value="40.00"
-          placeholder="40.00"
-          v-model="newRepairEstimateForm.partsCost"
-        />
-      </div>
-      <div id="ifBrake" v-if="selected === 'brake-change'">
-        <label for="brake-cost">Parts Cost:</label>
-        <input
-          type="text"
-          id="brake-cost"
-          name="brake-cost"
-          required
-          disabled
-          value="60.00"
-          placeholder="60.00"
-          v-model="newRepairEstimateForm.partsCost"
-        />
-      </div>
-      <div id="ifBattery" v-if="selected === 'battery-change'">
-        <label for="bat-cost">Parts Cost:</label>
-        <input
-          type="text"
-          id="bat-cost"
-          name="bat-cost"
-          required
-          disabled
-          value="115.00"
-          placeholder="115.00"
-          v-model="newRepairEstimateForm.partsCost"
-        />
-      </div>
-      <div id="ifTire" v-if="selected === 'tire-change'">
-        <label for="tire-cost">Parts Cost:</label>
-        <input
-          type="text"
-          id="tire-cost"
-          name="tire-cost"
-          required
-          disabled
-          value="70.00"
-          placeholder="70.00"
-          v-model="newRepairEstimateForm.partsCost"
-        />
-      </div>
-      <label for="labor-cost">Labor Cost:</label>
-      <input
-        type="number"
-        name="labor-cost"
-        id="labor-cost"
-        required
-        v-model="newRepairEstimateForm.laborCost"
-      />
+      
       <label for="total-time">Labor in Hours:</label>
       <input
         type="number"
-        name="total-time"
-        id="total-time"
+        name="hours"
+        id="hours"
         required
         v-model="newRepairEstimateForm.totalTime"
+        v-on:change="calculateCost(newRepairEstimateForm.totalTime)"
       />
       <label for="pickup-date">Pickup Date:</label>
       <input
@@ -101,6 +43,77 @@
         required
         v-model="newRepairEstimateForm.pickupTime"
       />
+      <!-- <button v-on:click="calculateCost(document.getElementById('hours').value)">Get Total</button> -->
+      <!-- <label for="labor-cost">Labor Cost:</label>
+      <input
+        type="number"
+        name="labor-cost"
+        id="labor-cost"
+        required
+        v-model="newRepairEstimateForm.laborCost"
+        value = totalLaborCost
+      /> -->
+      <div id="parts-cost">
+        <div id="ifOil" v-if="selected === 'oil-change'">
+          <label for="oil-cost" class="parts-label">Parts Cost:</label>
+          <input
+            type="text"
+            id="oil-cost"
+            name="oil-cost"
+            required
+            disabled
+            value="40.00"
+            placeholder="40.00"
+            v-model="newRepairEstimateForm.partsCost"
+            class="parts-input"
+          />
+        </div>
+        <div id="ifBrake" v-if="selected === 'brake-change'">
+          <label for="brake-cost" class="parts-label">Parts Cost:</label>
+          <input
+            type="text"
+            id="brake-cost"
+            name="brake-cost"
+            required
+            disabled
+            value="60.00"
+            placeholder="60.00"
+            v-model="newRepairEstimateForm.partsCost"
+            class="parts-input"
+          />
+        </div>
+        <div id="ifBattery" v-if="selected === 'battery-change'">
+          <label for="bat-cost" class="parts-label">Parts Cost:</label>
+          <input
+            type="text"
+            id="bat-cost"
+            name="bat-cost"
+            required
+            disabled
+            value="115.00"
+            placeholder="115.00"
+            v-model="newRepairEstimateForm.partsCost"
+            class="parts-input"
+          />
+        </div>
+        <div id="ifTire" v-if="selected === 'tire-change'">
+          <label for="tire-cost" class="parts-label">Parts Cost:</label>
+          <input
+            type="text"
+            id="tire-cost"
+            name="tire-cost"
+            required
+            disabled
+            value="70.00"
+            placeholder="70.00"
+            v-model="newRepairEstimateForm.partsCost"
+            class="parts-input"
+          />
+        </div>
+      </div>
+      <span id="labor-cost"
+        >Labor Cost: {{ this.newRepairEstimateForm.laborCost }}</span
+      >
       <input type="submit" value="Submit" id="submit" />
     </form>
   </div>
@@ -119,14 +132,16 @@ export default {
         pickupDate: "",
         pickupTime: "",
       },
+      totalLaborCost: "",
     };
   },
   methods: {
-    costCalculator(choice) {
-      if (choice.value === "oil-change") {
-        alert("check");
-        document.getElementById("ifOil").style.display = "block";
-      }
+    calculateCost(hours) {
+      let total = 0;
+      const labor = 45.0;
+      hours = this.newRepairEstimateForm.totalTime;
+      total = hours * labor;
+      this.newRepairEstimateForm.laborCost = total;
     },
   },
 };
@@ -137,8 +152,28 @@ export default {
 
 #repair-service-estimate {
   font-family: "Dosis", sans-serif;
+  width: 50%;
+  margin: auto;
 }
 #service-estimate {
   border: 1px solid black;
 }
+#labor-cost {
+  margin: 10px 0px 10px 0px;
+}
+#parts-cost {
+  margin: 20px 0px 10px 0px;
+  text-align: center;
+}
+.parts-label {
+  display: flex;
+  justify-content: center;
+}
+
+.parts-input {
+  padding-left: 8vh;
+  padding-right: 8vh;
+  text-align: center;
+} 
+
 </style>
