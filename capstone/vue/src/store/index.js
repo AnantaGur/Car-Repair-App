@@ -19,8 +19,21 @@ if(currentToken != null) {
 export default new Vuex.Store({
   state: {
     token: currentToken || '',
-    user: currentUser || {}
+    user: currentUser || {},
+    form: [
+      {
+        model: 'Toyota',
+        make: 'Corolla',
+        year: '2009',
+        color: 'Silver',
+        request: 'Oil Change',
+        oname: 'Ananta',
+        number: '410-423-5345',
+        email: 'grgananta99@gmail.com'
+      }
+    ]
   },
+
   mutations: {
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
@@ -37,6 +50,9 @@ export default new Vuex.Store({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = {};
+    },
+    ADD_REPAIR(state, form) {
+      state.form.unshift(form);
     }
   }
 })

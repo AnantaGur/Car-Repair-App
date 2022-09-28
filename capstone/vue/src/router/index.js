@@ -6,6 +6,7 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import Repair from '../views/Repair.vue'
+import Employee from '../views/Employee.vue'
 
 Vue.use(Router)
 
@@ -60,6 +61,15 @@ const router = new Router({
       component: Repair,
       meta: {
         requiresAuth: true
+      }
+    },
+    {
+      path: "/employee",
+      name: "employee",
+      component: Employee,
+      meta: {
+        requiresAuth: true,
+        authorize: ["ROLE_USER"]
       }
     }
   ]

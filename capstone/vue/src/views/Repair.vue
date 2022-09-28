@@ -1,15 +1,49 @@
 <template>
   <div class="repair-contain">
     <h1>Repair Form</h1>
-    <form action="repairform.txt">
-      <label for="vname">Vehicle Name:</label>
-      <input type="text" id="vname" name="vname" required />
+    <form v-on:submit.prevent="addRepairForm">
+      <label for="vmake">Vehicle Make:</label>
+      <input
+        type="text"
+        id="vmake"
+        name="vmake"
+        required
+        v-model="newRepairForm.vmake"
+      />
       <label for="vmodel">Vehicle Model:</label>
-      <input type="text" id="vmodel" name="vmodel" required />
+      <input
+        type="text"
+        id="vmodel"
+        name="vmodel"
+        required
+        v-model="newRepairForm.vmodel"
+      />
+      <label for="vyear">Vehicle Year:</label>
+      <input
+        type="number"
+        id="vyear"
+        name="vyear"
+        required
+        min="1900"
+        max="2023"
+        placeholder="1900-2023"
+        v-model="newRepairForm.vyear"
+      />
       <label for="vcolor">Vehicle Color:</label>
-      <input type="text" id="vcolor" name="vcolor" required />
+      <input
+        type="text"
+        id="vcolor"
+        name="vcolor"
+        required
+        v-model="newRepairForm.vcolor"
+      />
       <label for="rdescription">Repair Request:</label>
-      <select name="rdescription" id="rdescription" required>
+      <select
+        name="rdescription"
+        id="rdescription"
+        required
+        v-model="newRepairForm.rdescription"
+      >
         <option disabled selected id="select-option">
           --Please select option--
         </option>
@@ -19,7 +53,13 @@
         <option value="battery-change">Battery change</option>
       </select>
       <label for="oname">Owner Name:</label>
-      <input type="text" id="oname" name="oname" required />
+      <input
+        type="text"
+        id="oname"
+        name="oname"
+        required
+        v-model="newRepairForm.oname"
+      />
       <label for="pnumber">Phone Number:</label>
       <input
         type="tel"
@@ -28,9 +68,16 @@
         pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
         required
         placeholder="ex. 123-456-7890"
+        v-model="newRepairForm.pnumber"
       />
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        v-model="newRepairForm.email"
+      />
       <input type="submit" value="Submit" id="submit" />
     </form>
   </div>
@@ -39,6 +86,25 @@
 <script>
 export default {
   name: "repair",
+  data() {
+    return {
+      newRepairForm: {
+        vmake: "",
+        vmodel: "",
+        vyear: "",
+        vcolor: "",
+        rdescription: "",
+        oname: "",
+        pnumber: "",
+        email: "",
+      },
+    };
+  },
+  methods: {
+    addRepairForm() {
+      this.$store.commit("ADD_REPAIR", this.newRepairForm);
+    },
+  },
 };
 </script>
 
@@ -103,9 +169,9 @@ select {
   text-align: center;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1400px) {
   .repair-contain {
-    width: 50%;
+    width: 40%;
   }
 } ;
 </style>
