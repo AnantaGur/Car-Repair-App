@@ -60,6 +60,12 @@ export default {
         confirmPassword: "",
         role: "user",
       },
+      employee: {
+        username: "",
+        password: "",
+        confirmPassword: "",
+        role: "employee",
+      },
       registrationErrors: false,
       registrationErrorMsg: "There were problems registering this user.",
     };
