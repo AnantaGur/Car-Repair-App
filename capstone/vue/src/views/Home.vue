@@ -8,9 +8,9 @@
       <th>My Service Requests</th><br>
       <tr>
       <div class="request" v-for="request in repairRequests" :key="request.id">
-        <h1>{{ request.vehicleMake }}</h1>
-        <h1>{{ request.vehicleModel }}</h1>
-        <h1>{{ request.vehicleColor }}</h1>
+        <span id="make">{{ request.vehicleMake }}</span>
+        <span id="model">{{ request.vehicleModel }}</span>
+        <span id="color">{{ request.vehicleColor }}</span>
       </div>
       </tr>
       <tr>Estimated Schedule <td>This is an estimate on your schedule</td></tr><br>
@@ -65,6 +65,7 @@ export default {
   color: black;  
   margin-top: 50px;
   font-size: 32px;
+  margin-bottom: 30px;
 }
 
 .link:hover {
@@ -89,6 +90,20 @@ table {
   justify-content: center;
   margin-top: 10px;
   padding-bottom: 10px;
+}
+
+.request {
+  border: 3px solid black;
+  padding: 10px;
+  text-align: center;
+}
+
+.request span {
+  margin: 20px;
+}
+
+#make {
+    
 }
 
 </style>
