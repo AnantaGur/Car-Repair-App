@@ -52,3 +52,4 @@ insert into repair_estimate
 (request_id, parts_cost, labor_cost, total_time, pick_up_date, pick_up_time)
 VALUES
 (3, 500.00, 150.00, 5.00, '2022-09-28', '09:00:00');
+

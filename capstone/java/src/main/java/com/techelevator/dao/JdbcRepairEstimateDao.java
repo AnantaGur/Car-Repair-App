@@ -53,7 +53,7 @@ public class JdbcRepairEstimateDao implements RepairEstimateDao {
         repairEstimate.setLaborCost(rs.getBigDecimal("labor_cost"));
         repairEstimate.setTotalTime(rs.getDouble("total_time"));
         repairEstimate.setPickUpDate(rs.getDate("pick_up_date"));
-        repairEstimate.setPickUpTime(rs.getTime("pick_up_time"));
+        repairEstimate.setPickUpTime(rs.getTime("pick_up_time").toLocalTime());
         return repairEstimate;
     }
 }
