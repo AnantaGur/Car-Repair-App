@@ -13,6 +13,8 @@ public class RepairEstimate {
     private Date pickUpDate;
     private Time pickUpTime;
 
+    public RepairEstimate(){};
+
     public RepairEstimate(int repairId, int requestId, BigDecimal partsCost, BigDecimal laborCost, double totalTime, Date pickUpDate, Time pickUpTime) {
         this.repairId = repairId;
         this.requestId = requestId;
