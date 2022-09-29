@@ -32,7 +32,7 @@ public class ServiceRequestController {
         serviceRequestDao.createRequest(serviceRequest, userId);
     }
 
-    @ResponseStatus(HttpStatus.FOUND)
+//    @ResponseStatus(HttpStatus.FOUND)
     @RequestMapping(path = "/my_service_requests", method = RequestMethod.GET)
     public List<ServiceRequest> submittedRequestInfo(Principal principal){
         //List<ServiceRequest> userRequests;

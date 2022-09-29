@@ -5,7 +5,14 @@
       <img src="../images/black-logo.png" alt="banner" class="banner">
       </span>
     <table>
-      <th>SERVICES</th><br>
+      <th>My Service Requests</th><br>
+      <tr>
+      <div class="request" v-for="request in repairRequests" :key="request.id">
+        <h1>{{ request.vehicleMake }}</h1>
+        <h1>{{ request.vehicleModel }}</h1>
+        <h1>{{ request.vehicleColor }}</h1>
+      </div>
+      </tr>
       <tr>Estimated Schedule <td>This is an estimate on your schedule</td></tr><br>
       <tr>Estimated Cost <td>This is an estimate on your cost</td></tr>
     </table>
@@ -15,8 +22,24 @@
 </template>
 
 <script>
+
+import repairService from "../services/RepairService"
+
 export default {
-  name: "home"
+  name: "home",
+  data() {
+    return {
+      repairRequests: []
+    }
+  },
+  created() {
+    console.log("created")
+    repairService.getRepair().then(response => {
+      console.log(response.data)
+      this.repairRequests = response.data;
+      console.log(this.repairRequests)
+    });
+  }
 };
 </script>
 

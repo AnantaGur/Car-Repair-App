@@ -112,7 +112,7 @@
         </div>
       </div>
       <span id="labor-cost"
-        >Labor Cost: {{ this.newRepairEstimateForm.laborCost }}</span
+        >Labor Cost: {{ newRepairEstimateForm.laborCost }}</span
       >
       <input type="submit" value="Submit" id="submit" />
     </form>
