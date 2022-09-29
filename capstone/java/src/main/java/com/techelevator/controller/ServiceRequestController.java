@@ -39,6 +39,27 @@ public class ServiceRequestController {
         int userId = userDao.findIdByUsername(principal.getName());
         return serviceRequestDao.submittedRequestInfo(userId);
     }
+//    @PreAuthorize("isAuthenticated()") //only for employee or admin
+    @RequestMapping(path = "/all_service_requests", method = RequestMethod.GET)
+    public List<ServiceRequest> allServiceRequests (){
+       return serviceRequestDao.showAllRequests();
+    }
+
+    @RequestMapping(path = "/all_pending_requests", method = RequestMethod.GET)
+    public List<ServiceRequest> allPendingRequests (){
+        return serviceRequestDao.showAllPendingRequests();
+    }
+
+    @RequestMapping(path = "/all_in_progress_requests", method = RequestMethod.GET)
+    public List<ServiceRequest> allInProgressRequests (){
+        return serviceRequestDao.showAllInProgressRequests();
+    }
+
+    @RequestMapping(path = "/all_completed_requests", method = RequestMethod.GET)
+    public List<ServiceRequest> allCompletedRequests (){
+        return serviceRequestDao.showAllCompletedRequests();
+    }
+
 
 
 

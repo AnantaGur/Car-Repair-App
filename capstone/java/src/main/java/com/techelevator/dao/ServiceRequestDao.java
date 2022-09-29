@@ -13,6 +13,16 @@ public interface ServiceRequestDao {
 
     List<ServiceRequest> submittedRequestInfo(int userId);
 
+    List<ServiceRequest> showAllRequests();
+
+    List<ServiceRequest> showAllPendingRequests();
+
+    List<ServiceRequest> showAllInProgressRequests();
+
+    List<ServiceRequest> showAllCompletedRequests();
+
+
+
 
 
     //getTimeForCompletion for user

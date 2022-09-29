@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.RepairEstimate;
 import com.techelevator.model.ServiceRequest;
 import com.techelevator.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcServiceRequestDao implements ServiceRequestDao{
+public class JdbcServiceRequestDao implements ServiceRequestDao {
 
     private final JdbcTemplate jdbcTemplate;
     private final UserDao userDao;
@@ -38,7 +39,7 @@ public class JdbcServiceRequestDao implements ServiceRequestDao{
         ServiceRequest serviceRequest = null;
         String sql = "SELECT * FROM service_request WHERE request_id = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, requestId);
-        if (results.next()){
+        if (results.next()) {
             serviceRequest = mapRowToServiceRequest(results);
         }
         return serviceRequest;
@@ -50,14 +51,65 @@ public class JdbcServiceRequestDao implements ServiceRequestDao{
 
         String sql = "SELECT * FROM service_request WHERE user_id = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
-        while (results.next()){
+        while (results.next()) {
             ServiceRequest serviceRequest = mapRowToServiceRequest(results);
             serviceRequestList.add(serviceRequest);
         }
         return serviceRequestList;
     }
 
-    private ServiceRequest mapRowToServiceRequest (SqlRowSet rs){
+    @Override
+    public List<ServiceRequest> showAllRequests() {
+
+        List<ServiceRequest> serviceRequestList = new ArrayList<>();
+        String sql = "SELECT * FROM service_request;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while (results.next()) {
+            ServiceRequest serviceRequest = mapRowToServiceRequest(results);
+            serviceRequestList.add(serviceRequest);
+        }
+        return serviceRequestList;
+    }
+
+    @Override
+    public List<ServiceRequest> showAllPendingRequests() {
+
+        List<ServiceRequest> serviceRequestList = new ArrayList<>();
+        String sql = "SELECT * FROM service_request WHERE request_status ILIKE 'Pending';";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while (results.next()) {
+            ServiceRequest serviceRequest = mapRowToServiceRequest(results);
+            serviceRequestList.add(serviceRequest);
+        }
+        return serviceRequestList;
+    }
+
+    @Override
+    public List<ServiceRequest> showAllInProgressRequests() {
+
+        List<ServiceRequest> serviceRequestList = new ArrayList<>();
+        String sql = "SELECT * FROM service_request WHERE request_status ILIKE 'In Progress';";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while (results.next()) {
+            ServiceRequest serviceRequest = mapRowToServiceRequest(results);
+            serviceRequestList.add(serviceRequest);
+        }
+        return serviceRequestList;
+    }
+
+    @Override
+    public List<ServiceRequest> showAllCompletedRequests() {
+        List<ServiceRequest> serviceRequestList = new ArrayList<>();
+        String sql = "SELECT * FROM service_request WHERE request_status ILIKE 'Complete';";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while (results.next()) {
+            ServiceRequest serviceRequest = mapRowToServiceRequest(results);
+            serviceRequestList.add(serviceRequest);
+        }
+        return serviceRequestList;
+    }
+
+    private ServiceRequest mapRowToServiceRequest(SqlRowSet rs) {
         ServiceRequest serviceRequest = new ServiceRequest();
         serviceRequest.setVehicleMake(rs.getString("vehicle_make"));
         serviceRequest.setVehicleModel(rs.getString("vehicle_model"));
