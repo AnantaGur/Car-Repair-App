@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import java.math.BigDecimal;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class RepairEstimate {
@@ -17,8 +18,8 @@ public class RepairEstimate {
     private double totalTime;
     private Date pickUpDate;
 //    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonFormat(pattern = "hh:mm:ss a")
-    private LocalTime pickUpTime;
+//    @JsonFormat(pattern = "")
+    private String pickUpTime;
 
     public RepairEstimate(){};
 
@@ -29,7 +30,7 @@ public class RepairEstimate {
         this.laborCost = laborCost;
         this.totalTime = totalTime;
         this.pickUpDate = pickUpDate;
-        this.pickUpTime = pickUpTime;
+        this.pickUpTime = pickUpTime.format(DateTimeFormatter.ofPattern("hh:mm"));
     }
 
     public int getRepairId() {
@@ -80,11 +81,11 @@ public class RepairEstimate {
         this.pickUpDate = pickUpDate;
     }
 
-    public LocalTime getPickUpTime() {
+    public String getPickUpTime() {
         return pickUpTime;
     }
 
-    public void setPickUpTime(LocalTime pickUpTime) {
+    public void setPickUpTime(String pickUpTime) {
         this.pickUpTime = pickUpTime;
     }
 }
