@@ -1,14 +1,14 @@
 <template>
   <div class="repair-contain">
     <h1>Repair Form</h1>
-    <form v-on:submit.prevent="addRepairForm">
+    <form @submit.prevent="addRepairForm">
       <label for="vmake">Vehicle Make:</label>
       <input
         type="text"
         id="vmake"
         name="vmake"
         required
-        v-model="newRepairForm.vmake"
+        v-model="newRepairForm.vehicleMake"
       />
       <label for="vmodel">Vehicle Model:</label>
       <input
@@ -16,7 +16,7 @@
         id="vmodel"
         name="vmodel"
         required
-        v-model="newRepairForm.vmodel"
+        v-model="newRepairForm.vehicleModel"
       />
       <label for="vyear">Vehicle Year:</label>
       <input
@@ -27,7 +27,7 @@
         min="1900"
         max="2023"
         placeholder="1900-2023"
-        v-model="newRepairForm.vyear"
+        v-model="newRepairForm.vehicleYear"
       />
       <label for="vcolor">Vehicle Color:</label>
       <input
@@ -35,14 +35,14 @@
         id="vcolor"
         name="vcolor"
         required
-        v-model="newRepairForm.vcolor"
+        v-model="newRepairForm.vehicleColor"
       />
       <label for="rdescription">Repair Request:</label>
       <select
         name="rdescription"
         id="rdescription"
         required
-        v-model="newRepairForm.rdescription"
+        v-model="newRepairForm.serviceName"
       >
         <option disabled selected id="select-option">
           --Please select option--
@@ -58,17 +58,17 @@
         id="oname"
         name="oname"
         required
-        v-model="newRepairForm.oname"
+        v-model="newRepairForm.fullName"
       />
       <label for="pnumber">Phone Number:</label>
       <input
         type="tel"
         id="pnumber"
         name="pnumber"
-        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+        pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
         required
         placeholder="ex. 123-456-7890"
-        v-model="newRepairForm.pnumber"
+        v-model="newRepairForm.phoneNumber"
       />
       <label for="email">Email:</label>
       <input
@@ -84,25 +84,42 @@
 </template>
 
 <script>
+import repairService from "../services/RepairService";
+
 export default {
   name: "repair",
   data() {
     return {
       newRepairForm: {
-        vmake: "",
-        vmodel: "",
-        vyear: "",
-        vcolor: "",
-        rdescription: "",
-        oname: "",
-        pnumber: "",
+        vehicleMake: "",
+        vehicleModel: "",
+        vehicleYear: "",
+        vehicleColor: "",
+        serviceName: "",
+        fullName: "",
+        phoneNumber: "",
         email: "",
       },
     };
   },
   methods: {
     addRepairForm() {
-      this.$store.commit("ADD_REPAIR", this.newRepairForm);
+      repairService
+        .addRepairForm(this.newRepairForm)
+        .then((response) => {
+          if (response.status === 201) {
+            this.$router.push({
+              path: "/"
+            });
+          }
+        })
+        .catch((error) => {
+          const response = error.response;
+          this.registrationErrors = true;
+          if (response.status === 400) {
+            this.registrationErrorMsg = "Bad Request: Validation Errors";
+          }
+        });
     },
   },
 };
