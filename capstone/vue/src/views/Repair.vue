@@ -47,12 +47,12 @@
         <option disabled selected id="select-option">
           --Please select option--
         </option>
-        <option value="oil-change">Oil change</option>
-        <option value="brake-change">Brake change</option>
-        <option value="tire-change">Tire change</option>
-        <option value="battery-change">Battery change</option>
+        <option value="Oil Change">Oil change</option>
+        <option value="Brake Change">Brake change</option>
+        <option value="Tire Change">Tire change</option>
+        <option value="Battery Change">Battery change</option>
       </select>
-      <label for="oname">Owner Name:</label>
+      <label for="oname">Owner's Full Name:</label>
       <input
         type="text"
         id="oname"

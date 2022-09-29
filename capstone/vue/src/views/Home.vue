@@ -4,19 +4,30 @@
       <span id="banner-img">
       <img src="../images/black-logo.png" alt="banner" class="banner">
       </span>
+      <router-link :to="{name: 'repair'}" class="link">Request a Repair</router-link>
     <table>
       <th>My Service Requests</th><br>
       <tr>
       <div class="request" v-for="request in repairRequests" :key="request.id">
-        <span id="make">{{ request.vehicleMake }}</span>
-        <span id="model">{{ request.vehicleModel }}</span>
-        <span id="color">{{ request.vehicleColor }}</span>
+        <div class="info">
+        <span>{{ request.vehicleMake }}</span>
+        <span>{{ request.vehicleModel }}</span>
+        <span>{{ request.vehicleColor }}</span>
+        <span>{{ request.vehicleYear}}</span>
+        <span>{{request.fullName}}</span>
+        </div>
+        <tr class="rows">
+        <p>Service Type:</p>
+        <span>{{ request.serviceName }}</span>
+        </tr>
+        <tr class="rows">
+        <p>Status of Request:</p>
+        <span>{{request.requestStatus}}</span>
+        </tr>
       </div>
       </tr>
-      <tr>Estimated Schedule <td>This is an estimate on your schedule</td></tr><br>
-      <tr>Estimated Cost <td>This is an estimate on your cost</td></tr>
     </table>
-    <router-link :to="{name: 'repair'}" class="link">Repair Request</router-link>
+    
   </div>
   </div>
 </template>
@@ -48,6 +59,7 @@ export default {
 
 .home {
   font-family: "Dosis", sans-serif;
+  
 }
 .container {
   display: flex;
@@ -58,29 +70,36 @@ export default {
 .banner {
   margin-top: 10px;
   width: 25%;
+  
 }
 
 .link {
   text-decoration: none;
   color: black;  
-  margin-top: 50px;
+  margin-top: 30px;
   font-size: 32px;
-  margin-bottom: 30px;
+  border: 2px solid grey;
+  padding: 6px;
+  border-radius: 10px;
+  font-weight: 550;
+  background-color: white;
 }
 
 .link:hover {
   background-color: teal;
   color: white;
   border-radius: 10px;
-  padding: 2px 16px 4px 16px;
+  padding: 2px 10px 4px 10px;
   box-shadow: 10px 5px black;
+  font-weight: 700;
 }
 
 table {
   display: flex;
   flex-flow: column;
-  margin-top: 10vh;
+  margin-top: 2vh;
   font-size: 32px;
+  
 }
 
 #banner-img {
@@ -96,14 +115,39 @@ table {
   border: 3px solid black;
   padding: 10px;
   text-align: center;
+  margin: 20px;
+  border-radius: 10px;
+  background-color: white;
 }
 
 .request span {
-  margin: 20px;
+  margin: 10px;
 }
 
-#make {
-    
+.rows {
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+}
+
+.rows p {
+  margin: 3px;
+  font-weight: bold;
+  
+}
+
+.info {
+  color: white;
+  font-weight: 700;
+  box-shadow: 0px 6px rgb(0, 0, 0);
+  text-shadow: 2px 2px black;
+  background-color: teal;
+  border-radius: 10px;
+}
+
+table th {
+  margin-bottom: -50px;
+  
 }
 
 </style>

@@ -7,7 +7,11 @@ export default {
     },
 
     getRepair() {
-        return axios.get('/my_service_requests')
-    }
+        return axios.get('/my_service_requests');
+    },
+
+    sendServiceEstimate(estimate) {
+        return axios.post('/create_repair_estimate', estimate);
+    } 
 
 }
