@@ -4,12 +4,18 @@
       <span id="banner-img">
         <img src="../images/black-logo.png" alt="banner" class="banner" />
       </span>
+      <!-- <span class="background-img">
+        <img src="../images/flow.jpg" alt="flow">
+      </span> -->
       <router-link :to="{ name: 'repair' }" class="link"
         >Request a Repair</router-link
       >
       <table>
         <th>My Service Requests</th>
         <br />
+        <tr v-if="repairRequests == ''">
+          Click above to request a repair
+        </tr>
         <tr>
           <div
             class="request"
@@ -49,13 +55,15 @@ export default {
     };
   },
   created() {
-    console.log("created");
     repairService.getRepair().then((response) => {
-      console.log(response.data);
       this.repairRequests = response.data;
-      console.log(this.repairRequests);
     });
   },
+  methods: {
+    deleteRequestCard() {
+      
+    }
+  }
 };
 </script>
 
@@ -64,12 +72,15 @@ export default {
 
 .home {
   font-family: "Dosis", sans-serif;
-}
-
-body {
   background-image: url("../images/flow.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: absolute;
+  left: 0px;
+
+  width: 100%;
+  
 }
 
 .container {
@@ -147,13 +158,18 @@ table {
 .info {
   color: white;
   font-weight: 700;
-  box-shadow: 0px 6px rgb(0, 0, 0);
+  box-shadow: 5px 6px rgba(87, 134, 236, 0.50);
+  background: linear-gradient(90deg, rgba(36,35,50,1) 1%, rgba(31,136,173,0.9500175070028011) 56%, rgba(91,96,0,0.25253851540616246) 95%);
+
   text-shadow: 2px 2px black;
-  background-color: teal;
   border-radius: 10px;
 }
 
 table th {
   margin-bottom: -50px;
 }
+
+/* .background-img {
+  background-attachment: fixed;
+} */
 </style>

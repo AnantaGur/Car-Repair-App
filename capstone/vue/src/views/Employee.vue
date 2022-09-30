@@ -44,16 +44,36 @@
         required
         v-model="newRepairEstimateForm.pickUpTime"
       />
-      
-        <span id="parts-cost">
-          Parts Cost: {{ newRepairEstimateForm.partsCost }}
-        </span>
-  
+
+      <span id="parts-cost">
+        Parts Cost: {{ newRepairEstimateForm.partsCost }}
+      </span>
+
       <span id="labor-cost"
         >Labor Cost: {{ newRepairEstimateForm.laborCost }}</span
       >
       <input type="submit" value="Submit" id="submit" />
     </form>
+    <div class="request" v-for="request in repairRequests" :key="request.id">
+      <div class="info">
+        <span>{{ request.fullName }}</span>
+        <span>{{ request.phoneNumber }}</span>
+        <span>{{ request.email }}</span>
+        <br>
+        <span>{{ request.vehicleMake }}</span>
+        <span>{{ request.vehicleModel }}</span>
+        <span>{{ request.vehicleColor }}</span>
+        <span>{{ request.vehicleYear }}</span>
+      </div>
+      <tr class="rows">
+        <p>Service Type:</p>
+        <span>{{ request.serviceName }}</span>
+      </tr>
+      <tr class="rows">
+        <p>Status of Request:</p>
+        <span>{{ request.requestStatus }}</span>
+      </tr>
+    </div>
   </div>
 </template>
 
@@ -66,14 +86,14 @@ export default {
     return {
       selected: "",
       newRepairEstimateForm: {
-        requestId: "1",
+        requestId: "4",
         partsCost: "",
         laborCost: "",
         totalTime: "",
         pickUpDate: "",
         pickUpTime: "",
       },
-      totalLaborCost: "",
+      repairRequests: [],
     };
   },
   methods: {
@@ -102,7 +122,7 @@ export default {
         .then((response) => {
           if (response.status === 201) {
             this.$router.push({
-              path: "/employee",
+              path: "/",
             });
           }
         })
@@ -115,21 +135,21 @@ export default {
         });
     },
   },
+  created() {
+    repairService.getAllRepairs().then((response) => {
+      this.repairRequests = response.data;
+    });
+  },
 };
 </script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300&display=swap");
 
-template {
-  background-color: brown;
-}
 #repair-service-estimate {
   font-family: "Dosis", sans-serif;
   width: 50%;
   margin: auto;
-  background-color: rgba(255, 228, 196, 0.24);
-  padding: 20vh 10vh;
 }
 
 #service-estimate {
@@ -150,4 +170,34 @@ template {
   text-align: center;
 }
 
+.request {
+  border: 3px solid black;
+  box-shadow: 7px 10px grey;
+  padding: 10px;
+  text-align: center;
+  margin: 20px;
+  border-radius: 10px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  margin-top: 40px;
+}
+
+.request span {
+  margin: 10px;
+}
+
+.rows p {
+  font-weight: bold;
+}
+
+.info {
+  color: white;
+  font-weight: 700;
+  box-shadow: 0px 6px rgb(0, 0, 0);
+  text-shadow: 2px 2px black;
+  background-color: teal;
+  border-radius: 10px;
+}
 </style>
