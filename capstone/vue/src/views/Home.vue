@@ -18,7 +18,7 @@
         </tr>
         <tr>
           <div
-            class="request"
+            class="request-info"
             v-for="request in repairRequests"
             :key="request.id"
           >
@@ -60,10 +60,8 @@ export default {
     });
   },
   methods: {
-    deleteRequestCard() {
-      
-    }
-  }
+    deleteRequestCard() {},
+  },
 };
 </script>
 
@@ -78,9 +76,7 @@ export default {
   background-attachment: fixed;
   position: absolute;
   left: 0px;
-
   width: 100%;
-  
 }
 
 .container {
@@ -96,7 +92,7 @@ export default {
 
 .link {
   text-decoration: none;
-  color: black;
+  color: white;
   margin-top: 30px;
   font-size: 32px;
   border: 2px solid grey;
@@ -104,6 +100,13 @@ export default {
   border-radius: 10px;
   font-weight: 550;
   background-color: white;
+  background: linear-gradient(
+    90deg,
+    rgba(36, 35, 50, 1) 1%,
+    rgba(31, 136, 173, 0.9500175070028011) 56%,
+    rgba(91, 96, 0, 0.25253851540616246) 95%
+  );
+  font-weight: 550;
 }
 
 .link:hover {
@@ -130,17 +133,17 @@ table {
   padding-bottom: 10px;
 }
 
-.request {
+.request-info {
   border: 3px solid black;
   box-shadow: 7px 10px grey;
   padding: 10px;
   text-align: center;
   margin: 20px;
   border-radius: 10px;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
 }
 
-.request span {
+.request-info span {
   margin: 10px;
 }
 
@@ -148,6 +151,7 @@ table {
   display: flex;
   justify-content: center;
   flex-flow: column;
+  font-size: 24px;
 }
 
 .rows p {
@@ -158,11 +162,16 @@ table {
 .info {
   color: white;
   font-weight: 700;
-  box-shadow: 5px 6px rgba(87, 134, 236, 0.50);
-  background: linear-gradient(90deg, rgba(36,35,50,1) 1%, rgba(31,136,173,0.9500175070028011) 56%, rgba(91,96,0,0.25253851540616246) 95%);
-
+  box-shadow: 5px 6px rgba(87, 134, 236, 0.5);
+  background: linear-gradient(
+    90deg,
+    rgba(36, 35, 50, 1) 1%,
+    rgba(31, 136, 173, 0.9500175070028011) 56%,
+    rgba(91, 96, 0, 0.25253851540616246) 95%
+  );
   text-shadow: 2px 2px black;
   border-radius: 10px;
+padding: 5px 10px;
 }
 
 table th {
