@@ -1,59 +1,100 @@
 <template>
-  <div id="repair-service-estimate">
-    <h1>Requests</h1>
-    <form @submit.prevent="sendRepairService">
-      <label for="service-estimate">Service:</label>
-      <select
-        name="service-estimate"
-        id="service-estimate"
-        required
-        v-model="selected"
-        v-on:click="calculateParts"
-      >
-        <option disabled selected>Please select an option</option>
-        <option value="oil-change" id="oil-change">Oil Change</option>
-        <option value="brake-change" id="brake-change">Brake Change</option>
-        <option value="battery-change" id="battery-change">
-          Battery Change
-        </option>
-        <option value="tire-change" id="tire-change">Tire Change</option>
-      </select>
+  <div class="employee-page">
+    <div id="repair-service-estimate">
+      <h1>Requests</h1>
+      <form @submit.prevent="sendRepairService" class="employee-form">
+        <label for="service-estimate">Service:</label>
+        <select
+          name="service-estimate"
+          id="service-estimate"
+          required
+          v-model="selected"
+          v-on:click="calculateParts"
+        >
+          <option disabled selected>Please select an option</option>
+          <option value="oil-change" id="oil-change">Oil Change</option>
+          <option value="brake-change" id="brake-change">Brake Change</option>
+          <option value="battery-change" id="battery-change">
+            Battery Change
+          </option>
+          <option value="tire-change" id="tire-change">Tire Change</option>
+        </select>
 
-      <label for="total-time">Labor in Hours:</label>
-      <input
-        type="number"
-        name="hours"
-        id="hours"
-        required
-        v-model="newRepairEstimateForm.totalTime"
-        v-on:change="calculateCost(newRepairEstimateForm.totalTime)"
-      />
-      <label for="pickup-date">Pickup Date:</label>
-      <input
-        type="date"
-        name="pickup-date"
-        id="pickup-date"
-        required
-        v-model="newRepairEstimateForm.pickUpDate"
-      />
-      <label for="pickup-time">Pickup Time</label>
-      <input
-        type="time"
-        name="pickup-time"
-        id="pickup-time"
-        required
-        v-model="newRepairEstimateForm.pickUpTime"
-      />
-      
+        <label for="total-time">Labor in Hours:</label>
+        <input
+          type="number"
+          name="hours"
+          id="hours"
+          required
+          v-model="newRepairEstimateForm.totalTime"
+          v-on:change="calculateCost(newRepairEstimateForm.totalTime)"
+          class="employee-input"
+        />
+        <label for="pickup-date">Pickup Date:</label>
+        <input
+          type="date"
+          name="pickup-date"
+          id="pickup-date"
+          required
+          v-model="newRepairEstimateForm.pickUpDate"
+          class="employee-input"
+        />
+        <label for="pickup-time">Pickup Time</label>
+        <input
+          type="time"
+          name="pickup-time"
+          id="pickup-time"
+          required
+          v-model="newRepairEstimateForm.pickUpTime"
+          class="employee-input"
+        />
+
         <span id="parts-cost">
           Parts Cost: {{ newRepairEstimateForm.partsCost }}
         </span>
-  
-      <span id="labor-cost"
-        >Labor Cost: {{ newRepairEstimateForm.laborCost }}</span
-      >
-      <input type="submit" value="Submit" id="submit" />
-    </form>
+
+        <span id="labor-cost"
+          >Labor Cost: {{ newRepairEstimateForm.laborCost }}</span
+        >
+        <input
+          type="submit"
+          value="Submit"
+          id="submit"
+          class="employee-input"
+        />
+      </form>
+      <div class="request" v-for="request in repairRequests" :key="request.id">
+        <div class="employee-info">
+          <div class="vehicle-info">
+            <span>{{ request.vehicleMake }}</span>
+            <span>{{ request.vehicleModel }}</span>
+            <span>{{ request.vehicleColor }}</span>
+            <span>{{ request.vehicleYear }}</span>
+          </div>
+          <div class="user-info">
+            <span>{{ request.fullName }}</span>
+            <span>{{ request.phoneNumber }}</span>
+            <span>{{ request.email }}</span>
+            <br />
+          </div>
+        </div>
+        <div class="service-info">
+          <tr class="rows">
+            <p>Service Type:</p>
+            <span>{{ request.serviceName }}</span>
+          </tr>
+          <tr class="rows">
+            <p>Status of Request:</p>
+            <span>{{ request.requestStatus }}</span>
+          </tr>
+        </div>
+        <br />
+        <div class="status-box">
+          <label for="checkbox">Click to select order: </label>
+          <input type="checkbox" class="checkbox" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -66,14 +107,14 @@ export default {
     return {
       selected: "",
       newRepairEstimateForm: {
-        requestId: "1",
+        requestId: "4",
         partsCost: "",
         laborCost: "",
         totalTime: "",
         pickUpDate: "",
         pickUpTime: "",
       },
-      totalLaborCost: "",
+      repairRequests: [],
     };
   },
   methods: {
@@ -102,7 +143,7 @@ export default {
         .then((response) => {
           if (response.status === 201) {
             this.$router.push({
-              path: "/employee",
+              path: "/",
             });
           }
         })
@@ -115,25 +156,22 @@ export default {
         });
     },
   },
+  created() {
+    repairService.getAllRepairs().then((response) => {
+      this.repairRequests = response.data;
+    });
+  },
 };
 </script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300&display=swap");
 
-template {
-  background-color: brown;
-}
 #repair-service-estimate {
   font-family: "Dosis", sans-serif;
   width: 50%;
   margin: auto;
-  background-color: rgba(255, 228, 196, 0.24);
-  padding: 20vh 10vh;
-}
-
-#service-estimate {
-  border: 1px solid black;
+  margin-bottom: 10vh;
 }
 
 #labor-cost {
@@ -144,10 +182,88 @@ template {
   margin-top: 20px;
 }
 
+#service-estimate {
+  border: 1px solid black;
+}
+
+.employee-page {
+  background-image: url("../images/flow.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: absolute;
+  left: 0px;
+  width: 100%;
+}
+
+.employee-form {
+  font-weight: 700;
+}
+
 .parts-input {
   padding-left: 8vh;
   padding-right: 8vh;
   text-align: center;
+}
+
+.request {
+  border: 3px solid black;
+  box-shadow: 7px 10px grey;
+  padding: 10px;
+  text-align: center;
+  margin: 20px;
+  border-radius: 10px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  margin-top: 40px;
+}
+
+.request span {
+  margin: 10px;
+}
+
+.rows p {
+  font-weight: bold;
+}
+
+.employee-info {
+  color: white;
+  font-weight: 700;
+  box-shadow: 0px 6px rgb(0, 0, 0);
+  text-shadow: 2px 2px black;
+  background-color: teal;
+  border-radius: 10px;
+  padding: 0px 10px 0px 10px;
+  width: 80%;
+}
+
+.vehicle-info {
+  display: flex;
+  justify-content: space-around;
+  text-transform: uppercase;
+  justify-content: center;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-around;
+  text-transform: capitalize;
+  justify-content: center;
+}
+
+.service-info {
+  text-transform: capitalize;
+  font-size: 18px;
+}
+
+.employee-input {
+  width: 50%;
+  padding: 6px;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 2px 2px rgba(128, 128, 128, 0.486);
 }
 
 </style>
