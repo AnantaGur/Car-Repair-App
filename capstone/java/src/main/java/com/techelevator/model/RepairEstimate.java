@@ -17,9 +17,8 @@ public class RepairEstimate {
     private BigDecimal laborCost;
     private double totalTime;
     private Date pickUpDate;
-//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-//    @JsonFormat(pattern = "")
-    private String pickUpTime;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
+    private LocalTime pickUpTime;
 
     public RepairEstimate(){};
 
@@ -30,7 +29,7 @@ public class RepairEstimate {
         this.laborCost = laborCost;
         this.totalTime = totalTime;
         this.pickUpDate = pickUpDate;
-        this.pickUpTime = pickUpTime.format(DateTimeFormatter.ofPattern("hh:mm"));
+        this.pickUpTime = pickUpTime;
     }
 
     public int getRepairId() {
@@ -81,11 +80,11 @@ public class RepairEstimate {
         this.pickUpDate = pickUpDate;
     }
 
-    public String getPickUpTime() {
+    public LocalTime getPickUpTime() {
         return pickUpTime;
     }
 
-    public void setPickUpTime(String pickUpTime) {
+    public void setPickUpTime(LocalTime pickUpTime) {
         this.pickUpTime = pickUpTime;
     }
 }
