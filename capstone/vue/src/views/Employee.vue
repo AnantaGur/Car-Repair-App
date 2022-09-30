@@ -121,10 +121,15 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300&display=swap");
 
+template {
+  background-color: brown;
+}
 #repair-service-estimate {
   font-family: "Dosis", sans-serif;
   width: 50%;
   margin: auto;
+  background-color: rgba(255, 228, 196, 0.24);
+  padding: 20vh 10vh;
 }
 
 #service-estimate {

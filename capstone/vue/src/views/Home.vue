@@ -2,55 +2,60 @@
   <div class="home">
     <div class="container">
       <span id="banner-img">
-      <img src="../images/black-logo.png" alt="banner" class="banner">
+        <img src="../images/black-logo.png" alt="banner" class="banner" />
       </span>
-      <router-link :to="{name: 'repair'}" class="link">Request a Repair</router-link>
-    <table>
-      <th>My Service Requests</th><br>
-      <tr>
-      <div class="request" v-for="request in repairRequests" :key="request.id">
-        <div class="info">
-        <span>{{ request.vehicleMake }}</span>
-        <span>{{ request.vehicleModel }}</span>
-        <span>{{ request.vehicleColor }}</span>
-        <span>{{ request.vehicleYear}}</span>
-        <span>{{request.fullName}}</span>
-        </div>
-        <tr class="rows">
-        <p>Service Type:</p>
-        <span>{{ request.serviceName }}</span>
+      <router-link :to="{ name: 'repair' }" class="link"
+        >Request a Repair</router-link
+      >
+      <table>
+        <th>My Service Requests</th>
+        <br />
+        <tr>
+          <div
+            class="request"
+            v-for="request in repairRequests"
+            :key="request.id"
+          >
+            <div class="info">
+              <span>{{ request.vehicleMake }}</span>
+              <span>{{ request.vehicleModel }}</span>
+              <span>{{ request.vehicleColor }}</span>
+              <span>{{ request.vehicleYear }}</span>
+              <span>{{ request.fullName }}</span>
+            </div>
+            <tr class="rows">
+              <p>Service Type:</p>
+              <span>{{ request.serviceName }}</span>
+            </tr>
+            <tr class="rows">
+              <p>Status of Request:</p>
+              <span>{{ request.requestStatus }}</span>
+            </tr>
+          </div>
         </tr>
-        <tr class="rows">
-        <p>Status of Request:</p>
-        <span>{{request.requestStatus}}</span>
-        </tr>
-      </div>
-      </tr>
-    </table>
-    
-  </div>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
-
-import repairService from "../services/RepairService"
+import repairService from "../services/RepairService";
 
 export default {
   name: "home",
   data() {
     return {
-      repairRequests: []
-    }
+      repairRequests: [],
+    };
   },
   created() {
-    console.log("created")
-    repairService.getRepair().then(response => {
-      console.log(response.data)
+    console.log("created");
+    repairService.getRepair().then((response) => {
+      console.log(response.data);
       this.repairRequests = response.data;
-      console.log(this.repairRequests)
+      console.log(this.repairRequests);
     });
-  }
+  },
 };
 </script>
 
@@ -59,8 +64,14 @@ export default {
 
 .home {
   font-family: "Dosis", sans-serif;
-  
 }
+
+body {
+  background-image: url("../images/flow.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .container {
   display: flex;
   align-items: center;
@@ -70,12 +81,11 @@ export default {
 .banner {
   margin-top: 10px;
   width: 25%;
-  
 }
 
 .link {
   text-decoration: none;
-  color: black;  
+  color: black;
   margin-top: 30px;
   font-size: 32px;
   border: 2px solid grey;
@@ -99,7 +109,6 @@ table {
   flex-flow: column;
   margin-top: 2vh;
   font-size: 32px;
-  
 }
 
 #banner-img {
@@ -107,12 +116,12 @@ table {
   background-color: black;
   width: 100%;
   justify-content: center;
-  margin-top: 10px;
   padding-bottom: 10px;
 }
 
 .request {
   border: 3px solid black;
+  box-shadow: 7px 10px grey;
   padding: 10px;
   text-align: center;
   margin: 20px;
@@ -133,7 +142,6 @@ table {
 .rows p {
   margin: 3px;
   font-weight: bold;
-  
 }
 
 .info {
@@ -147,7 +155,5 @@ table {
 
 table th {
   margin-bottom: -50px;
-  
 }
-
 </style>
