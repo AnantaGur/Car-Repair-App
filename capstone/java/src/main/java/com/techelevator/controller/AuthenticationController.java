@@ -23,6 +23,7 @@ import com.techelevator.security.jwt.JWTFilter;
 import com.techelevator.security.jwt.TokenProvider;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -68,6 +69,16 @@ public class AuthenticationController {
     @RequestMapping(path = "/find_user_role", method = RequestMethod.GET)
     public String userRole (Principal principal){
         return userDao.findRoleByUserName(principal.getName());
+    }
+
+    @RequestMapping(path = "/get_user_byId/{userId}", method = RequestMethod.GET)
+    public User getUserById (@PathVariable int userId){
+        return userDao.getUserById(userId);
+    }
+
+    @RequestMapping(path = "/get_users_by_role", method = RequestMethod.GET)
+    public List <User> usersByRole (@RequestParam String role){
+        return userDao.getUsersByRole(role);
     }
 
     /**

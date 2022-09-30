@@ -99,6 +99,17 @@ public class JdbcUserDao implements UserDao {
         return userRole;
     }
 
+    @Override
+    public List<User> getUsersByRole(String role) {
+        List<User> usersByRole = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE role ILIKE ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, role);
+        while (results.next()){
+            usersByRole.add(mapRowToUser(results));
+        }
+        return usersByRole;
+    }
+
 
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
