@@ -22,6 +22,8 @@ import com.techelevator.model.UserAlreadyExistsException;
 import com.techelevator.security.jwt.JWTFilter;
 import com.techelevator.security.jwt.TokenProvider;
 
+import java.security.Principal;
+
 @RestController
 @CrossOrigin
 public class AuthenticationController {
@@ -61,6 +63,11 @@ public class AuthenticationController {
         } catch (UsernameNotFoundException e) {
             userDao.create(newUser.getUsername(),newUser.getPassword(), newUser.getRole());
         }
+    }
+
+    @RequestMapping(path = "/find_user_role", method = RequestMethod.GET)
+    public String userRole (Principal principal){
+        return userDao.findRoleByUserName(principal.getName());
     }
 
     /**
