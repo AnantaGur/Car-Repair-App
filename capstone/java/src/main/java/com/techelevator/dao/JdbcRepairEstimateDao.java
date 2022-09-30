@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +55,7 @@ public class JdbcRepairEstimateDao implements RepairEstimateDao {
         repairEstimate.setLaborCost(rs.getBigDecimal("labor_cost"));
         repairEstimate.setTotalTime(rs.getDouble("total_time"));
         repairEstimate.setPickUpDate(rs.getDate("pick_up_date"));
-        repairEstimate.setPickUpTime(rs.getTime("pick_up_time"));
+        repairEstimate.setPickUpTime(rs.getTime("pick_up_time").toLocalTime());
         return repairEstimate;
     }
 }

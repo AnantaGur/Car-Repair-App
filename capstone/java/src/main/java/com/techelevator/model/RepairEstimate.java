@@ -1,7 +1,13 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+
 import java.math.BigDecimal;
 import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class RepairEstimate {
@@ -11,11 +17,12 @@ public class RepairEstimate {
     private BigDecimal laborCost;
     private double totalTime;
     private Date pickUpDate;
-    private Time pickUpTime;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
+    private LocalTime pickUpTime;
 
     public RepairEstimate(){};
 
-    public RepairEstimate(int repairId, int requestId, BigDecimal partsCost, BigDecimal laborCost, double totalTime, Date pickUpDate, Time pickUpTime) {
+    public RepairEstimate(int repairId, int requestId, BigDecimal partsCost, BigDecimal laborCost, double totalTime, Date pickUpDate, LocalTime pickUpTime) {
         this.repairId = repairId;
         this.requestId = requestId;
         this.partsCost = partsCost;
@@ -73,12 +80,11 @@ public class RepairEstimate {
         this.pickUpDate = pickUpDate;
     }
 
-    public Time getPickUpTime() {
+    public LocalTime getPickUpTime() {
         return pickUpTime;
     }
 
-    public void setPickUpTime(Time pickUpTime) {
+    public void setPickUpTime(LocalTime pickUpTime) {
         this.pickUpTime = pickUpTime;
     }
-
 }
