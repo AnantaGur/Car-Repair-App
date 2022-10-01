@@ -51,6 +51,7 @@ public class JdbcRepairEstimateDao implements RepairEstimateDao {
     private RepairEstimate mapRowToRepairEstimate(SqlRowSet rs){
         RepairEstimate repairEstimate = new RepairEstimate();
         repairEstimate.setRepairId(rs.getInt("repair_id"));
+        repairEstimate.setRequestId(rs.getInt("request_id"));
         repairEstimate.setPartsCost(rs.getBigDecimal("parts_cost"));
         repairEstimate.setLaborCost(rs.getBigDecimal("labor_cost"));
         repairEstimate.setTotalTime(rs.getDouble("total_time"));

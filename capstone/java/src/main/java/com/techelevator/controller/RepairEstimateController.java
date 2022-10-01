@@ -24,6 +24,11 @@ public class RepairEstimateController {
         repairEstimateDao.createRepairEstimate(repairEstimate,repairEstimate.getRequestId());
     }
 
+    @RequestMapping(path = "/get_repair_byId/{repairId}", method = RequestMethod.GET)
+    public RepairEstimate getRepairById (@PathVariable int repairId){
+        return repairEstimateDao.getRepairEstimate(repairId);
+    }
+
 
 
 }

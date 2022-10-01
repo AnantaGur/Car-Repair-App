@@ -20,6 +20,8 @@ public interface UserDao {
 
     String findRoleByUserName (String username);
 
+    List<User> getUsersByRole (String role);
+
     /*
     user should be able to see request submitted
     includes everything, vehicle, contact info, and service requested

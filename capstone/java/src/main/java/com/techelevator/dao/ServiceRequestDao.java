@@ -21,7 +21,9 @@ public interface ServiceRequestDao {
 
     List<ServiceRequest> showAllCompletedRequests();
 
+    void updateServiceRequestStatus (ServiceRequest serviceRequest);
 
+    void deleteServiceRequest (int requestId);
 
 
 

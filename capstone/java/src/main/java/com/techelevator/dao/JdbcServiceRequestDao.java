@@ -109,6 +109,19 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
         return serviceRequestList;
     }
 
+    @Override
+    public void updateServiceRequestStatus(ServiceRequest serviceRequest) {
+        String sql = "UPDATE service_request SET request_status = ? WHERE request_id = ?;";
+        jdbcTemplate.update(sql, serviceRequest.getRequestStatus(), serviceRequest.getRequestId());
+
+    }
+
+    @Override
+    public void deleteServiceRequest(int requestId) {
+        String sql = "DELETE FROM service_request WHERE request_id = ?;";
+        jdbcTemplate.update(sql, requestId);
+    }
+
     private ServiceRequest mapRowToServiceRequest(SqlRowSet rs) {
         ServiceRequest serviceRequest = new ServiceRequest();
         serviceRequest.setVehicleMake(rs.getString("vehicle_make"));

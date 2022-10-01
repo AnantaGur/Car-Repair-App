@@ -32,7 +32,6 @@ public class ServiceRequestController {
         serviceRequestDao.createRequest(serviceRequest, userId);
     }
 
-//    @ResponseStatus(HttpStatus.FOUND)
     @RequestMapping(path = "/my_service_requests", method = RequestMethod.GET)
     public List<ServiceRequest> submittedRequestInfo(Principal principal){
         //List<ServiceRequest> userRequests;
@@ -58,6 +57,21 @@ public class ServiceRequestController {
     @RequestMapping(path = "/all_completed_requests", method = RequestMethod.GET)
     public List<ServiceRequest> allCompletedRequests (){
         return serviceRequestDao.showAllCompletedRequests();
+    }
+
+    @RequestMapping(path = "/update_request_status", method = RequestMethod.PUT)
+    public void updateRequestStatus (@RequestBody ServiceRequest serviceRequest){
+        serviceRequestDao.updateServiceRequestStatus(serviceRequest);
+    }
+
+    @RequestMapping(path = "/delete_service_request/{requestId}", method = RequestMethod.DELETE)
+    public void deleteServiceRequest (@PathVariable int requestId){
+        serviceRequestDao.deleteServiceRequest(requestId);
+    }
+
+    @RequestMapping(path = "/get_request_byId/{requestId}", method = RequestMethod.GET)
+    public ServiceRequest getRequestById (@PathVariable int requestId){
+        return serviceRequestDao.getServiceRequest(requestId);
     }
 
 
