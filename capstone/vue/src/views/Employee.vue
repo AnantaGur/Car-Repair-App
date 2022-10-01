@@ -63,7 +63,7 @@
           class="employee-input"
         />
       </form>
-      <div class="request" v-for="request in repairRequests" :key="request.id">
+      <div class="request" v-for="request in repairRequests" :key="request.id" v-bind:checked="request.requestId">
         <div class="employee-info">
           <div class="vehicle-info">
             <span>{{ request.vehicleMake }}</span>
@@ -91,7 +91,7 @@
         <br />
         <div class="status-box">
           <label for="checkbox">Click to select order: </label>
-          <input type="checkbox" class="checkbox" />
+          <input type="checkbox" class="checkbox" v-on:change="addRequestId(request.requestId)"/>
         </div>
       </div>
     </div>
@@ -107,7 +107,7 @@ export default {
     return {
       selected: "",
       newRepairEstimateForm: {
-        requestId: "4",
+        requestId: "",
         partsCost: "",
         laborCost: "",
         totalTime: "",
@@ -118,6 +118,12 @@ export default {
     };
   },
   methods: {
+    addRequestId (id) {
+
+      this.newRepairEstimateForm.requestId = id
+      // console.log(this.newRepairEstimateForm.requestId)
+      console.log(id)
+    },
     calculateCost(hours) {
       let total = 0;
       const labor = 45.0;
