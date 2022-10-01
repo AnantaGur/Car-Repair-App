@@ -19,7 +19,12 @@ export default {
     },
 
     deleteRequest(requestId) {
-        return axios.delete(`/whatever_they_call_it/${requestId}`)
-    }
+        return axios.delete(`/delete_service_request/${requestId}`)
+    },
+
+    updateServiceStatus(status) {
+        return axios.put('/update_request_status', status)
+    },
+
 
 }

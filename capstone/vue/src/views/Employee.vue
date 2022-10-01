@@ -19,7 +19,6 @@
           </option>
           <option value="tire-change" id="tire-change">Tire Change</option>
         </select>
-
         <label for="total-time">Labor in Hours:</label>
         <input
           type="number"
@@ -48,7 +47,6 @@
           v-model="newRepairEstimateForm.pickUpTime"
           class="employee-input"
         />
-
         <span id="parts-cost">
           Parts Cost: {{ newRepairEstimateForm.partsCost }}
         </span>
@@ -91,7 +89,7 @@
         <br />
         <div class="status-box">
           <label for="checkbox">Click to select order: </label>
-          <input type="checkbox" class="checkbox" v-on:change="addRequestId(request.requestId)"/>
+          <input type="checkbox" class="checkbox" v-on:change="sendEstimate(request.requestId)"/>
         </div>
       </div>
     </div>
@@ -118,12 +116,10 @@ export default {
     };
   },
   methods: {
-    addRequestId (id) {
-
+    sendEstimate (id) {
       this.newRepairEstimateForm.requestId = id
-      // console.log(this.newRepairEstimateForm.requestId)
-      console.log(id)
-    },
+      },
+    
     calculateCost(hours) {
       let total = 0;
       const labor = 45.0;
@@ -160,6 +156,20 @@ export default {
             this.registrationErrorMsg = "Bad Request: Validation Errors";
           }
         });
+        const request = 
+        this.repairRequests.find((requestId) => {
+          return requestId.requestId === this.newRepairEstimateForm.requestId
+          });
+          console.log(request)
+          console.log(this.repairRequests)
+
+          request.requestStatus = 'Pending customer review'
+          repairService.updateServiceStatus(request).then(response => {
+            if (response.status === 200){
+              alert("Estimate was sent")
+              location.reload()
+            }
+          })
     },
   },
   created() {

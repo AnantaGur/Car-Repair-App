@@ -21,6 +21,7 @@
             class="request-info"
             v-for="request in repairRequests"
             :key="request.id"
+            v-bind:to="request.requestId"
           >
             <div class="info">
               <span>{{ request.vehicleMake }}</span>
@@ -36,6 +37,14 @@
             <tr class="rows">
               <p>Status of Request:</p>
               <span>{{ request.requestStatus }}</span>
+            </tr>
+            <tr>
+              <button
+                id="delete-request"
+                v-on:click="deleteRequestCard(request.requestId)"
+              >
+                Delete
+              </button>
             </tr>
           </div>
         </tr>
@@ -60,7 +69,15 @@ export default {
     });
   },
   methods: {
-    deleteRequestCard() {},
+    deleteRequestCard(id) {
+      console.log(id);
+      repairService.deleteRequest(id).then((response) => {
+        if (response.status === 200) {
+          alert("Deleted");
+          location.reload();
+        }
+      });
+    },
   },
 };
 </script>
@@ -171,7 +188,7 @@ table {
   );
   text-shadow: 2px 2px black;
   border-radius: 10px;
-padding: 5px 10px;
+  padding: 5px 10px;
 }
 
 table th {
