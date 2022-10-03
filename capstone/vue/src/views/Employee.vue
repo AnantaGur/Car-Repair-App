@@ -160,9 +160,6 @@ export default {
         this.repairRequests.find((requestId) => {
           return requestId.requestId === this.newRepairEstimateForm.requestId
           });
-          console.log(request)
-          console.log(this.repairRequests)
-
           request.requestStatus = 'Pending customer review'
           repairService.updateServiceStatus(request).then(response => {
             if (response.status === 200){

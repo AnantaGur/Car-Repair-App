@@ -38,12 +38,23 @@
               <p>Status of Request:</p>
               <span>{{ request.requestStatus }}</span>
             </tr>
-            <div class="estimate" v-for="estimate in repairEstimate" :key="estimate.id" >
-            <tr class="rows">
-              <span>{{ repairEstimate.partsCost }}</span>
-              <span>{{ repairEstimate.laborCost }}</span>
-              <span>{{ parseInt(repairEstimate.partsCost) + parseInt(repairEstimate.laborCost)}}</span>
-            </tr>
+            <div
+              class="estimate"
+              v-for="estimate in repairEstimate"
+              :key="estimate.id"
+            >
+              <div v-if="request.requestId === estimate.requestId">
+                <tr class="rows">
+                  
+                  <span>Date: {{ estimate.pickUpDate }}</span>
+                  <span>Pick Up Time: {{ estimate.pickUpTime }}</span>
+                  <span>Parts Cost: {{ estimate.partsCost }}</span>
+                  <span>Labor Cost: {{ estimate.laborCost }}</span>
+                  <span> Total Cost: {{
+                    parseInt(estimate.partsCost) + parseInt(estimate.laborCost)
+                  }}</span>
+                </tr>
+              </div>
             </div>
             <tr>
               <button
@@ -53,6 +64,10 @@
               >
                 Delete
               </button>
+              <div v-if="request.requestStatus == 'Pending customer review'">
+              <button>Accept Order</button>
+              <button v-on:click="deleteRequestCard(request.requestId)">Decline Order</button>
+              </div>
             </tr>
           </div>
         </tr>
@@ -69,12 +84,16 @@ export default {
   data() {
     return {
       repairRequests: [],
-      repairEstimate: []
+      repairEstimate: [],
     };
   },
   created() {
     repairService.getRepair().then((response) => {
       this.repairRequests = response.data;
+    });
+    repairService.getRepairEstimate().then((response) => {
+      console.log(response.data);
+      this.repairEstimate = response.data;
     });
   },
   methods: {
@@ -87,8 +106,9 @@ export default {
       });
     },
     calculatedEstimate() {
-      this.totalCost = this.repairEstimate.partsCost + this.repairEstimate.laborCost;
-    }
+      this.totalCost =
+        this.repairEstimate.partsCost + this.repairEstimate.laborCost;
+    },
   },
 };
 </script>
@@ -105,7 +125,6 @@ export default {
   position: absolute;
   left: 0px;
   width: 100%;
-  height: ;
 }
 
 .container {
