@@ -38,9 +38,17 @@
               <p>Status of Request:</p>
               <span>{{ request.requestStatus }}</span>
             </tr>
+            <div class="estimate" v-for="estimate in repairEstimate" :key="estimate.id" >
+            <tr class="rows">
+              <span>{{ repairEstimate.partsCost }}</span>
+              <span>{{ repairEstimate.laborCost }}</span>
+              <span>{{ parseInt(repairEstimate.partsCost) + parseInt(repairEstimate.laborCost)}}</span>
+            </tr>
+            </div>
             <tr>
               <button
                 id="delete-request"
+                v-if="request.requestStatus !== 'Pending customer review'"
                 v-on:click="deleteRequestCard(request.requestId)"
               >
                 Delete
@@ -61,6 +69,7 @@ export default {
   data() {
     return {
       repairRequests: [],
+      repairEstimate: []
     };
   },
   created() {
@@ -70,7 +79,6 @@ export default {
   },
   methods: {
     deleteRequestCard(id) {
-      console.log(id);
       repairService.deleteRequest(id).then((response) => {
         if (response.status === 200) {
           alert("Deleted");
@@ -78,6 +86,9 @@ export default {
         }
       });
     },
+    calculatedEstimate() {
+      this.totalCost = this.repairEstimate.partsCost + this.repairEstimate.laborCost;
+    }
   },
 };
 </script>
@@ -94,6 +105,7 @@ export default {
   position: absolute;
   left: 0px;
   width: 100%;
+  height: ;
 }
 
 .container {
