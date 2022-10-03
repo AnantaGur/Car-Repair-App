@@ -81,6 +81,11 @@ public class AuthenticationController {
         return userDao.getUsersByRole(role);
     }
 
+    @RequestMapping(path = "/who_am_i", method = RequestMethod.GET)
+    public User whoAmi (Principal principal){
+        return userDao.findByUsername(principal.getName());
+    }
+
     /**
      * Object to return as body in JWT Authentication.
      */

@@ -11,4 +11,6 @@ public interface RepairEstimateDao {
 
     RepairEstimate getRepairEstimate (int repairId);
 
+    List<RepairEstimate> myRepairEstimate (int userId);
+
 }
