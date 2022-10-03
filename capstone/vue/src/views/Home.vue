@@ -92,7 +92,6 @@ export default {
       this.repairRequests = response.data;
     });
     repairService.getRepairEstimate().then((response) => {
-      console.log(response.data);
       this.repairEstimate = response.data;
     });
   },

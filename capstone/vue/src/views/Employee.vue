@@ -61,7 +61,13 @@
           class="employee-input"
         />
       </form>
-      <div class="request" v-for="request in repairRequests" :key="request.id" v-bind:checked="request.requestId">
+      <div
+        class="request"
+        v-for="request in repairRequests"
+        :key="request.id"
+        v-bind:checked="request.requestId"
+        :class="{ colorChange: statusChange }"
+      >
         <div class="employee-info">
           <div class="vehicle-info">
             <span>{{ request.vehicleMake }}</span>
@@ -88,8 +94,26 @@
         </div>
         <br />
         <div class="status-box">
-          <label for="checkbox">Click to select order: </label>
-          <input type="checkbox" class="checkbox" v-on:change="sendEstimate(request.requestId)"/>
+          <!-- <label for="checkbox">Click to select order: </label>
+          <input type="checkbox" class="checkbox" v-on:change="sendEstimate(request.requestId)"
+           v-on:click="isChecked = true" :disabled="isChecked == true"/>
+           <br> -->
+          <button
+            v-if="
+              isChecked === false &&
+              request.requestId !== newRepairEstimateForm.requestId
+            "
+            v-on:click="(isChecked = true), sendEstimate(request.requestId)"
+          >
+            Select Order
+          </button>
+          <button
+            v-on:click="
+              (isChecked = false), (newRepairEstimateForm.requestId = '')
+            "
+          >
+            Deselect Order
+          </button>
         </div>
       </div>
     </div>
@@ -113,13 +137,24 @@ export default {
         pickUpTime: "",
       },
       repairRequests: [],
+      isChecked: false,
     };
   },
   methods: {
-    sendEstimate (id) {
-      this.newRepairEstimateForm.requestId = id
-      },
-    
+    sendEstimate(id) {
+      this.newRepairEstimateForm.requestId = id;
+      console.log(id);
+      console.log(this.isChecked);
+    },
+    statusChange() {
+      let selection = document.querySelector("colorChange");
+      return this.repairRequests.forEach((repair) => {
+        if (this.newRepairEstimateForm.requestId === repair.requestId) {
+          selection.style.color = "red";
+        }
+      });
+    },
+
     calculateCost(hours) {
       let total = 0;
       const labor = 45.0;
@@ -156,17 +191,16 @@ export default {
             this.registrationErrorMsg = "Bad Request: Validation Errors";
           }
         });
-        const request = 
-        this.repairRequests.find((requestId) => {
-          return requestId.requestId === this.newRepairEstimateForm.requestId
-          });
-          request.requestStatus = 'Pending customer review'
-          repairService.updateServiceStatus(request).then(response => {
-            if (response.status === 200){
-              alert("Estimate was sent")
-              location.reload()
-            }
-          })
+      const request = this.repairRequests.find((requestId) => {
+        return requestId.requestId === this.newRepairEstimateForm.requestId;
+      });
+      request.requestStatus = "Pending customer review";
+      repairService.updateServiceStatus(request).then((response) => {
+        if (response.status === 200) {
+          alert("Estimate was sent");
+          location.reload();
+        }
+      });
     },
   },
   created() {
@@ -174,6 +208,23 @@ export default {
       this.repairRequests = response.data;
     });
   },
+
+  //   computed: {
+  //     statusChange() {
+  // let selection = document.querySelector("colorChange")
+  //       return this.repairRequests.forEach(repair => {
+  //         if (this.newRepairEstimateForm.requestId === repair.requestId){
+
+  //          selection.style.color = "red";
+  //         }
+  //       })
+  //     },
+  //   }
+  // computed: {
+  //   isChecked2() {
+  //     return this.isChecked.length > 0;
+  //   }
+  // }
 };
 </script>
 
@@ -279,4 +330,7 @@ export default {
   box-shadow: 2px 2px rgba(128, 128, 128, 0.486);
 }
 
+/* .colorChange {
+  background-color: blueviolet;
+} */
 </style>
