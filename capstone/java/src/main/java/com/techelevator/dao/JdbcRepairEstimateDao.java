@@ -48,6 +48,21 @@ public class JdbcRepairEstimateDao implements RepairEstimateDao {
         return repairEstimate;
     }
 
+    @Override
+    public List<RepairEstimate> myRepairEstimate(int userId) {
+        List<RepairEstimate> listOfRepairEstimate = new ArrayList<>();
+        String sql = "SELECT * " +
+                "FROM repair_estimate " +
+                "JOIN service_request ON service_request.request_id = repair_estimate.request_id " +
+                "JOIN users ON users.user_id = service_request.user_id " +
+                "WHERE users.user_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+        while(results.next()){
+            listOfRepairEstimate.add(mapRowToRepairEstimate(results));
+        }
+        return listOfRepairEstimate;
+    }
+
     private RepairEstimate mapRowToRepairEstimate(SqlRowSet rs){
         RepairEstimate repairEstimate = new RepairEstimate();
         repairEstimate.setRepairId(rs.getInt("repair_id"));
