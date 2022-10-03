@@ -113,7 +113,6 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     public void updateServiceRequestStatus(ServiceRequest serviceRequest) {
         String sql = "UPDATE service_request SET request_status = ? WHERE request_id = ?;";
         jdbcTemplate.update(sql, serviceRequest.getRequestStatus(), serviceRequest.getRequestId());
-
     }
 
     @Override
