@@ -13,6 +13,10 @@ export default {
     getAllRepairs() {
         return axios.get('/all_service_requests');
     },
+    
+    findUserRole(){
+        return axios.get('/find_user_role');
+    },
 
     getRepairEstimate(){
         return axios.get('/my_repair_estimates');
@@ -29,6 +33,8 @@ export default {
     updateServiceStatus(status) {
         return axios.put('/update_request_status', status);
     },
+
+    
 
 
 }

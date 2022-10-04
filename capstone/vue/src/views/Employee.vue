@@ -118,6 +118,7 @@
           >
             Deselect Order
           </button>
+          <button v-if="request.requestStatus === 'Accepted'" v-on:click="completedRequest(request.requestId)" class="completed-button">Completed</button>
         </div>
       </div>
     </div>
@@ -142,6 +143,7 @@ export default {
       },
       repairRequests: [],
       isChecked: false,
+      requestId: ""
     };
   },
   methods: {
@@ -203,6 +205,19 @@ export default {
         }
       });
     },
+    completedRequest(id) {
+        this.requestId = id;
+      const request = this.repairRequests.find((requestId) => {
+        return requestId.requestId === this.requestId;
+      });
+      request.requestStatus = "Completed";
+      repairService.updateServiceStatus(request).then((response) => {
+        if (response.status === 200) {
+          alert("Completed");
+          location.reload();
+        }
+      });
+    }
   },
   created() {
     repairService.getAllRepairs().then((response) => {
@@ -351,6 +366,15 @@ export default {
 
 .deselect-button:hover {
   background-color: rgba(214, 57, 57, 0.801);
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+  box-shadow: 5px 3px black;
+}
+
+.completed-button {
+  background-color: rgba(0, 128, 128, 0.822);
   color: white;
   border-radius: 10px;
   padding: 6px 13px;

@@ -41,31 +41,31 @@ public class ServiceRequestController {
     }
 
     //    @PreAuthorize("isAuthenticated()") //only for employee or admin
-    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
     @RequestMapping(path = "/all_service_requests", method = RequestMethod.GET)
     public List<ServiceRequest> allServiceRequests() {
         return serviceRequestDao.showAllRequests();
     }
 
-    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
     @RequestMapping(path = "/all_pending_requests", method = RequestMethod.GET)
     public List<ServiceRequest> allPendingRequests() {
         return serviceRequestDao.showAllPendingRequests();
     }
 
-    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
     @RequestMapping(path = "/all_in_progress_requests", method = RequestMethod.GET)
     public List<ServiceRequest> allInProgressRequests() {
         return serviceRequestDao.showAllInProgressRequests();
     }
 
-    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
     @RequestMapping(path = "/all_completed_requests", method = RequestMethod.GET)
     public List<ServiceRequest> allCompletedRequests() {
         return serviceRequestDao.showAllCompletedRequests();
     }
 
-    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
     @RequestMapping(path = "/update_request_status", method = RequestMethod.PUT)
     public void updateRequestStatus(@RequestBody ServiceRequest serviceRequest) {
         serviceRequestDao.updateServiceRequestStatus(serviceRequest);

@@ -4,9 +4,6 @@
       <span id="banner-img">
         <img src="../images/black-logo.png" alt="banner" class="banner" />
       </span>
-      <!-- <span class="background-img">
-        <img src="../images/flow.jpg" alt="flow">
-      </span> -->
       <router-link :to="{ name: 'repair' }" class="link"
         >Request a Repair</router-link
       >
@@ -154,6 +151,7 @@ export default {
   position: absolute;
   left: 0px;
   width: 100%;
+  height: 100vh;
 }
 
 .container {
@@ -200,6 +198,7 @@ table {
   flex-flow: column;
   margin-top: 2vh;
   font-size: 32px;
+  
 }
 
 #banner-img {
@@ -218,6 +217,7 @@ table {
   margin: 20px;
   border-radius: 10px;
   background-color: rgb(255, 255, 255);
+  
 }
 
 .request-info span {
