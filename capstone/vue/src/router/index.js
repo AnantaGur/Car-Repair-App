@@ -78,7 +78,6 @@ const router = new Router({
       component: Admin,
       meta: {
         requiresAuth : true,
-        authorize : ["ROLE_ADMIN"]
       },
     }
   ]

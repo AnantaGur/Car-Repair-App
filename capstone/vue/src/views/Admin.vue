@@ -59,7 +59,7 @@ export default {
         role: "employee",
       },
       registrationErrors: false,
-      registrationErrorMsg: "There were problems registering this user.",
+      registrationErrorMsg: "There were problems registering this employee.",
     };
   },
   methods: {
@@ -72,10 +72,8 @@ export default {
           .register(this.user)
           .then((response) => {
             if (response.status == 201) {
-              this.$router.push({
-                path: "/login",
-                query: { registration: "success" },
-              });
+              alert("Employee created successfully")
+              location.reload()
             }
           })
           .catch((error) => {
@@ -89,7 +87,7 @@ export default {
     },
     clearErrors() {
       this.registrationErrors = false;
-      this.registrationErrorMsg = "There were problems registering this user.";
+      this.registrationErrorMsg = "There were problems registering this employee.";
     },
   },
 };
@@ -103,10 +101,6 @@ export default {
   display: flex;
   flex-flow: column;
   align-items: center;
-  /* background-image: url("../images/backgroundmountian.jpg"); */
-  /* border: dotted 5px black;
-  border-radius: 30px 10px;
-*/
 }
 
 div .logo {

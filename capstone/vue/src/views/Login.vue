@@ -50,7 +50,8 @@ export default {
         username: "",
         password: ""
       },
-      invalidCredentials: false
+      invalidCredentials: false,
+      userRole: ""
     };
   },
   methods: {
@@ -73,6 +74,6 @@ export default {
           }
         });
     }
-  }
+  },
 };
 </script>

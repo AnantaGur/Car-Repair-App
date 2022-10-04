@@ -40,19 +40,30 @@
               v-for="estimate in repairEstimate"
               :key="estimate.id"
             >
-              <div v-if="request.requestId === estimate.requestId">
+              <div v-if="request.requestId === estimate.requestId" id="estimate">
                 <tr class="rows">
-                  <span>Date: {{ estimate.pickUpDate }}</span>
-                  <span>Pick Up Time: {{ estimate.pickUpTime }}</span>
-                  <span>Parts Cost: {{ estimate.partsCost }}</span>
-                  <span>Labor Cost: {{ estimate.laborCost }}</span>
+                  <label for="your-estimate" class="your-estimate">Your Estimate</label>
+                  <td>
+                    <label for="date" class="estimate-labels">Date:</label>
+                  <span>{{ estimate.pickUpDate }}</span>
+                  <label for="pickup-time" class="estimate-labels">Pick Up Time:</label>
+                  <span>{{ estimate.pickUpTime }}</span>
+                  </td>
+                  <td>
+                    <label for="parts-cost" class="estimate-labels">Parts Cost:</label>
+                  <span>{{ estimate.partsCost }}</span>
+                  <label for="labor-cost" class="estimate-labels">Labor Cost:</label>
+                  <span>{{ estimate.laborCost }}</span>
+                  </td>
+                  <td>
+                  <label for="total-cost" class="estimate-labels">Total Cost:</label>
                   <span>
-                    Total Cost:
                     {{
                       parseInt(estimate.partsCost) +
                       parseInt(estimate.laborCost)
-                    }}</span
-                  >
+                    }}
+                    </span>
+                  </td>
                 </tr>
               </div>
             </div>
@@ -61,12 +72,15 @@
                 id="delete-request"
                 v-if="request.requestStatus === 'Pending Technician Review'"
                 v-on:click="deleteRequestCard(request.requestId)"
+                class="home-screen-buttons"
               >
                 Delete
               </button>
               <div v-if="request.requestStatus == 'Pending customer review'">
-                <button v-on:click="updateStatusAccept(request.requestId)">Accept Order</button>
-                <button v-on:click="updateStatusDeclined(request.requestId)">Decline Order</button>
+                <button v-on:click="updateStatusAccept(request.requestId)" 
+                class="home-screen-buttons">Accept Order</button>
+                <button v-on:click="updateStatusDeclined(request.requestId)" 
+                class="home-screen-buttons">Decline Order</button>
               </div>
             </tr>
           </div>
@@ -209,6 +223,11 @@ table {
   padding-bottom: 10px;
 }
 
+#estimate {
+  border: 2px solid black;
+  border-radius: 20px;
+}
+
 .request-info {
   border: 3px solid black;
   box-shadow: 7px 10px grey;
@@ -236,6 +255,14 @@ table {
   font-weight: bold;
 }
 
+.rows td {
+  margin: 6px;
+}
+
+.estimate-labels {
+  font-weight: bold;
+}
+
 .info {
   color: white;
   font-weight: 700;
@@ -251,6 +278,34 @@ table {
   padding: 5px 10px;
   text-transform: uppercase;
   margin-bottom: 15px;
+}
+
+.home-screen-buttons {
+  background: linear-gradient(
+    90deg,
+    rgba(36, 35, 50, 1) 1%,
+    rgba(31, 136, 173, 0.9500175070028011) 56%,
+    rgba(91, 96, 0, 0.25253851540616246) 95%
+  );
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+}
+
+.home-screen-buttons:hover {
+  background-color: rgba(0, 128, 128, 0.822);
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+  box-shadow: 3px 3px black;
+}
+
+.your-estimate {
+  font-size: 30px;
+  padding: 10px;
+  font-weight: bold;
 }
 
 table th {

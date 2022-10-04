@@ -94,10 +94,6 @@
         </div>
         <br />
         <div class="status-box">
-          <!-- <label for="checkbox">Click to select order: </label>
-          <input type="checkbox" class="checkbox" v-on:change="sendEstimate(request.requestId)"
-           v-on:click="isChecked = true" :disabled="isChecked == true"/>
-           <br> -->
           <button
             v-if="
               isChecked === false &&
