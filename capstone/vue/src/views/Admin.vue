@@ -2,7 +2,7 @@
   <div id="register" class="text-center">
     <img src="../images/teal-logo.png" alt="Fixxer logo" class="logo" />
     <form class="form-register" @submit.prevent="register">
-      <h1 class="h3 mb-3 font-weight-normal">Create Your Account</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Register an Employee</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
@@ -37,11 +37,9 @@
         v-model="user.confirmPassword"
         required
       />
-      <router-link :to="{ name: 'login' }" class="login-link"
-        >Have an account?</router-link
-      >
+    
       <button class="btn btn-lg btn-primary btn-block" type="submit">
-        Create Account
+        Register Employee
       </button>
     </form>
   </div>
@@ -58,7 +56,7 @@ export default {
         username: "",
         password: "",
         confirmPassword: "",
-        role: "user",
+        role: "employee",
       },
       registrationErrors: false,
       registrationErrorMsg: "There were problems registering this user.",

@@ -45,28 +45,31 @@
             >
               <div v-if="request.requestId === estimate.requestId">
                 <tr class="rows">
-                  
                   <span>Date: {{ estimate.pickUpDate }}</span>
                   <span>Pick Up Time: {{ estimate.pickUpTime }}</span>
                   <span>Parts Cost: {{ estimate.partsCost }}</span>
                   <span>Labor Cost: {{ estimate.laborCost }}</span>
-                  <span> Total Cost: {{
-                    parseInt(estimate.partsCost) + parseInt(estimate.laborCost)
-                  }}</span>
+                  <span>
+                    Total Cost:
+                    {{
+                      parseInt(estimate.partsCost) +
+                      parseInt(estimate.laborCost)
+                    }}</span
+                  >
                 </tr>
               </div>
             </div>
             <tr>
               <button
                 id="delete-request"
-                v-if="request.requestStatus !== 'Pending customer review'"
+                v-if="request.requestStatus === 'Pending Technician Review'"
                 v-on:click="deleteRequestCard(request.requestId)"
               >
                 Delete
               </button>
               <div v-if="request.requestStatus == 'Pending customer review'">
-              <button>Accept Order</button>
-              <button v-on:click="deleteRequestCard(request.requestId)">Decline Order</button>
+                <button v-on:click="updateStatusAccept(request.requestId)">Accept Order</button>
+                <button v-on:click="updateStatusDeclined(request.requestId)">Decline Order</button>
               </div>
             </tr>
           </div>
@@ -85,6 +88,7 @@ export default {
     return {
       repairRequests: [],
       repairEstimate: [],
+      requestId : ""
     };
   },
   created() {
@@ -108,6 +112,32 @@ export default {
       this.totalCost =
         this.repairEstimate.partsCost + this.repairEstimate.laborCost;
     },
+    updateStatusDeclined(id) {
+      this.requestId = id;
+      const request = this.repairRequests.find((requestId) => {
+        return requestId.requestId === this.requestId;
+      });
+      request.requestStatus = "Declined Order";
+      repairService.updateServiceStatus(request).then((response) => {
+        if (response.status === 200) {
+          alert("Declined Order");
+          location.reload();
+        }
+      });
+    },
+    updateStatusAccept(id) {
+      this.requestId = id;
+      const request = this.repairRequests.find((requestId) => {
+        return requestId.requestId === this.requestId;
+      });
+      request.requestStatus = "Accepted";
+      repairService.updateServiceStatus(request).then((response) => {
+        if (response.status === 200) {
+          alert("Accepted");
+          location.reload();
+        }
+      });
+    }
   },
 };
 </script>
@@ -219,6 +249,8 @@ table {
   text-shadow: 2px 2px black;
   border-radius: 10px;
   padding: 5px 10px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
 }
 
 table th {

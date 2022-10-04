@@ -101,9 +101,11 @@
           <button
             v-if="
               isChecked === false &&
-              request.requestId !== newRepairEstimateForm.requestId
+              request.requestId !== newRepairEstimateForm.requestId &&
+              request.requestStatus == 'Pending Technician Review'
             "
             v-on:click="(isChecked = true), sendEstimate(request.requestId)"
+            class="select-button"
           >
             Select Order
           </button>
@@ -111,6 +113,8 @@
             v-on:click="
               (isChecked = false), (newRepairEstimateForm.requestId = '')
             "
+            v-if="request.requestId === newRepairEstimateForm.requestId && isChecked === true"
+            class="deselect-button"
           >
             Deselect Order
           </button>
@@ -143,8 +147,6 @@ export default {
   methods: {
     sendEstimate(id) {
       this.newRepairEstimateForm.requestId = id;
-      console.log(id);
-      console.log(this.isChecked);
     },
     statusChange() {
       let selection = document.querySelector("colorChange");
@@ -174,7 +176,6 @@ export default {
       }
     },
     sendRepairService() {
-      console.log(this.newRepairEstimateForm);
       repairService
         .sendServiceEstimate(this.newRepairEstimateForm)
         .then((response) => {
@@ -208,23 +209,6 @@ export default {
       this.repairRequests = response.data;
     });
   },
-
-  //   computed: {
-  //     statusChange() {
-  // let selection = document.querySelector("colorChange")
-  //       return this.repairRequests.forEach(repair => {
-  //         if (this.newRepairEstimateForm.requestId === repair.requestId){
-
-  //          selection.style.color = "red";
-  //         }
-  //       })
-  //     },
-  //   }
-  // computed: {
-  //   isChecked2() {
-  //     return this.isChecked.length > 0;
-  //   }
-  // }
 };
 </script>
 
@@ -297,7 +281,12 @@ export default {
   font-weight: 700;
   box-shadow: 0px 6px rgb(0, 0, 0);
   text-shadow: 2px 2px black;
-  background-color: teal;
+   background: linear-gradient(
+    90deg,
+    rgba(36, 35, 50, 1) 1%,
+    rgba(31, 136, 173, 0.9500175070028011) 56%,
+    rgba(91, 96, 0, 0.25253851540616246) 95%
+  );
   border-radius: 10px;
   padding: 0px 10px 0px 10px;
   width: 80%;
@@ -328,6 +317,45 @@ export default {
   border: none;
   border-radius: 6px;
   box-shadow: 2px 2px rgba(128, 128, 128, 0.486);
+}
+
+.select-button {
+   background: linear-gradient(
+    90deg,
+    rgba(36, 35, 50, 1) 1%,
+    rgba(31, 136, 173, 0.9500175070028011) 56%,
+    rgba(91, 96, 0, 0.25253851540616246) 95%
+  );
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+}
+
+.select-button:hover {
+  background-color: rgba(0, 128, 128, 0.822);
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+  box-shadow: 5px 3px black;
+}
+
+.deselect-button {
+  background-color: rgb(214, 57, 57);
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+}
+
+.deselect-button:hover {
+  background-color: rgba(214, 57, 57, 0.801);
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+  box-shadow: 5px 3px black;
 }
 
 /* .colorChange {

@@ -9,6 +9,7 @@
       <!-- &nbsp;|&nbsp; -->
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" class="nav">Logout</router-link>
       <router-link v-bind:to="{ name: 'employee'}" class="nav">Employee</router-link>
+      <router-link v-bind:to="{ name: 'admin'}" class="nav">Admin</router-link>
     </div>
     <router-view />
   </div>
