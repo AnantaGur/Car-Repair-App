@@ -178,8 +178,7 @@ export default {
 }
 
 #submit:hover {
-  background-color: rgb(40, 131, 131);
-  opacity: 0.75;
+  background-color: rgb(58, 139, 139);
   box-shadow: 5px 3px black;
 }
 

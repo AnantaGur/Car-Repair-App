@@ -7,6 +7,7 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import Repair from '../views/Repair.vue'
 import Employee from '../views/Employee.vue'
+import Admin from '../views/Admin.vue'
 
 Vue.use(Router)
 
@@ -69,8 +70,16 @@ const router = new Router({
       component: Employee,
       meta: {
         requiresAuth: true,
-        authorize: ["ROLE_USER"]
       }
+    },
+    {
+      path: '/admin',
+      name: "admin",
+      component: Admin,
+      meta: {
+        requiresAuth : true,
+        authorize : ["ROLE_ADMIN"]
+      },
     }
   ]
 })

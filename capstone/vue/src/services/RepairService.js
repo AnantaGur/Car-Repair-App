@@ -11,7 +11,11 @@ export default {
     },
 
     getAllRepairs() {
-        return axios.get('/all_service_requests')
+        return axios.get('/all_service_requests');
+    },
+
+    getRepairEstimate(){
+        return axios.get('/my_repair_estimates');
     },
 
     sendServiceEstimate(estimate) {
@@ -19,11 +23,11 @@ export default {
     },
 
     deleteRequest(requestId) {
-        return axios.delete(`/delete_service_request/${requestId}`)
+        return axios.delete(`/delete_service_request/${requestId}`);
     },
 
     updateServiceStatus(status) {
-        return axios.put('/update_request_status', status)
+        return axios.put('/update_request_status', status);
     },
 
 

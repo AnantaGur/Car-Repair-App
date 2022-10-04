@@ -61,7 +61,13 @@
           class="employee-input"
         />
       </form>
-      <div class="request" v-for="request in repairRequests" :key="request.id" v-bind:checked="request.requestId">
+      <div
+        class="request"
+        v-for="request in repairRequests"
+        :key="request.id"
+        v-bind:checked="request.requestId"
+        :class="{ colorChange: statusChange }"
+      >
         <div class="employee-info">
           <div class="vehicle-info">
             <span>{{ request.vehicleMake }}</span>
@@ -88,8 +94,30 @@
         </div>
         <br />
         <div class="status-box">
-          <label for="checkbox">Click to select order: </label>
-          <input type="checkbox" class="checkbox" v-on:change="sendEstimate(request.requestId)"/>
+          <!-- <label for="checkbox">Click to select order: </label>
+          <input type="checkbox" class="checkbox" v-on:change="sendEstimate(request.requestId)"
+           v-on:click="isChecked = true" :disabled="isChecked == true"/>
+           <br> -->
+          <button
+            v-if="
+              isChecked === false &&
+              request.requestId !== newRepairEstimateForm.requestId &&
+              request.requestStatus == 'Pending Technician Review'
+            "
+            v-on:click="(isChecked = true), sendEstimate(request.requestId)"
+            class="select-button"
+          >
+            Select Order
+          </button>
+          <button
+            v-on:click="
+              (isChecked = false), (newRepairEstimateForm.requestId = '')
+            "
+            v-if="request.requestId === newRepairEstimateForm.requestId && isChecked === true"
+            class="deselect-button"
+          >
+            Deselect Order
+          </button>
         </div>
       </div>
     </div>
@@ -113,13 +141,22 @@ export default {
         pickUpTime: "",
       },
       repairRequests: [],
+      isChecked: false,
     };
   },
   methods: {
-    sendEstimate (id) {
-      this.newRepairEstimateForm.requestId = id
-      },
-    
+    sendEstimate(id) {
+      this.newRepairEstimateForm.requestId = id;
+    },
+    statusChange() {
+      let selection = document.querySelector("colorChange");
+      return this.repairRequests.forEach((repair) => {
+        if (this.newRepairEstimateForm.requestId === repair.requestId) {
+          selection.style.color = "red";
+        }
+      });
+    },
+
     calculateCost(hours) {
       let total = 0;
       const labor = 45.0;
@@ -139,7 +176,6 @@ export default {
       }
     },
     sendRepairService() {
-      console.log(this.newRepairEstimateForm);
       repairService
         .sendServiceEstimate(this.newRepairEstimateForm)
         .then((response) => {
@@ -156,20 +192,16 @@ export default {
             this.registrationErrorMsg = "Bad Request: Validation Errors";
           }
         });
-        const request = 
-        this.repairRequests.find((requestId) => {
-          return requestId.requestId === this.newRepairEstimateForm.requestId
-          });
-          console.log(request)
-          console.log(this.repairRequests)
-
-          request.requestStatus = 'Pending customer review'
-          repairService.updateServiceStatus(request).then(response => {
-            if (response.status === 200){
-              alert("Estimate was sent")
-              location.reload()
-            }
-          })
+      const request = this.repairRequests.find((requestId) => {
+        return requestId.requestId === this.newRepairEstimateForm.requestId;
+      });
+      request.requestStatus = "Pending customer review";
+      repairService.updateServiceStatus(request).then((response) => {
+        if (response.status === 200) {
+          alert("Estimate was sent");
+          location.reload();
+        }
+      });
     },
   },
   created() {
@@ -249,7 +281,12 @@ export default {
   font-weight: 700;
   box-shadow: 0px 6px rgb(0, 0, 0);
   text-shadow: 2px 2px black;
-  background-color: teal;
+   background: linear-gradient(
+    90deg,
+    rgba(36, 35, 50, 1) 1%,
+    rgba(31, 136, 173, 0.9500175070028011) 56%,
+    rgba(91, 96, 0, 0.25253851540616246) 95%
+  );
   border-radius: 10px;
   padding: 0px 10px 0px 10px;
   width: 80%;
@@ -282,4 +319,46 @@ export default {
   box-shadow: 2px 2px rgba(128, 128, 128, 0.486);
 }
 
+.select-button {
+   background: linear-gradient(
+    90deg,
+    rgba(36, 35, 50, 1) 1%,
+    rgba(31, 136, 173, 0.9500175070028011) 56%,
+    rgba(91, 96, 0, 0.25253851540616246) 95%
+  );
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+}
+
+.select-button:hover {
+  background-color: rgba(0, 128, 128, 0.822);
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+  box-shadow: 5px 3px black;
+}
+
+.deselect-button {
+  background-color: rgb(214, 57, 57);
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+}
+
+.deselect-button:hover {
+  background-color: rgba(214, 57, 57, 0.801);
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+  box-shadow: 5px 3px black;
+}
+
+/* .colorChange {
+  background-color: blueviolet;
+} */
 </style>
