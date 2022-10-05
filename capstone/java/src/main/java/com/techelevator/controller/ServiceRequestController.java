@@ -65,7 +65,6 @@ public class ServiceRequestController {
         return serviceRequestDao.showAllCompletedRequests();
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
     @RequestMapping(path = "/update_request_status", method = RequestMethod.PUT)
     public void updateRequestStatus(@RequestBody ServiceRequest serviceRequest) {
         serviceRequestDao.updateServiceRequestStatus(serviceRequest);
