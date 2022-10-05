@@ -33,7 +33,9 @@
             </tr>
             <tr class="rows">
               <p>Status of Request:</p>
-              <span>{{ request.requestStatus }}</span>
+              <span v-bind:style="[request.requestStatus === 'Completed' ? {color: 'green'} : {color: 'black'} ||
+            request.requestStatus === 'Declined Order' ? {color: 'red'} : {color: 'black'} ||
+            request.requestStatus === 'Accepted' ? {color: 'skyblue'} : {color: 'black'}]">{{ request.requestStatus }}</span>
             </tr>
             <div
               class="estimate"
