@@ -89,7 +89,10 @@
           </tr>
           <tr class="rows">
             <p>Status of Request:</p>
-            <span>{{ request.requestStatus }}</span>
+            <span class="request-status" 
+            v-bind:style="[request.requestStatus == 'Completed' ? request.requestStatus == 'Declined' ? request.requestStatus == 'Accepted' ? {color: 'green'} : {color: 'red'}: {color: 'yellow'} : {color: 'black'}]">
+            {{ request.requestStatus }}
+            </span>
           </tr>
         </div>
         <br />
@@ -114,7 +117,7 @@
           >
             Deselect Order
           </button>
-          <button v-if="request.requestStatus === 'Accepted'" v-on:click="completedRequest(request.requestId)" class="completed-button">Completed</button>
+          <button v-if="request.requestStatus === 'Accepted'" v-on:click="completedRequest(request.requestId)" class="completed-button">Complete</button>
         </div>
       </div>
     </div>
@@ -219,6 +222,9 @@ export default {
     repairService.getAllRepairs().then((response) => {
       this.repairRequests = response.data;
     });
+    if (this.request.requestStatus == 'Completed') {
+      document.getElementById('request-status').style.color ="green";
+    }
   },
 };
 </script>
@@ -376,6 +382,10 @@ export default {
   padding: 6px 13px;
   border: none;
   box-shadow: 5px 3px black;
+}
+
+.request-status {
+  font-weight: 700;
 }
 
 /* .colorChange {

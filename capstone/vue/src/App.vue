@@ -7,16 +7,16 @@
       </router-link>
       <router-link v-bind:to="{ name: 'home' }" class="nav">Home</router-link>
       <!-- &nbsp;|&nbsp; -->
+      <router-link v-bind:to="{ name: 'employee' }" class="nav" v-if="userRole === 'ROLE_EMPLOYEE' || userRole === 'ROLE_ADMIN'"
+        >Service Requests</router-link
+      >
+      <router-link v-bind:to="{ name: 'admin' }" class="nav" v-if="userRole === 'ROLE_ADMIN'">Register an Employee</router-link>
       <router-link
         v-bind:to="{ name: 'logout' }"
         v-if="$store.state.token != ''"
         class="nav"
         >Logout</router-link
       >
-      <router-link v-bind:to="{ name: 'employee' }" class="nav" v-if="userRole === 'ROLE_EMPLOYEE' || userRole === 'ROLE_ADMIN'"
-        >Employee</router-link
-      >
-      <router-link v-bind:to="{ name: 'admin' }" class="nav" v-if="userRole === 'ROLE_ADMIN'">Admin</router-link>
     </div>
     <router-view />
   </div>
