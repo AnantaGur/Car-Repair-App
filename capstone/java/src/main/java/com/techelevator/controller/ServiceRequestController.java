@@ -64,7 +64,6 @@ public class ServiceRequestController {
     public List<ServiceRequest> allCompletedRequests() {
         return serviceRequestDao.showAllCompletedRequests();
     }
-    
     @RequestMapping(path = "/update_request_status", method = RequestMethod.PUT)
     public void updateRequestStatus(@RequestBody ServiceRequest serviceRequest) {
         serviceRequestDao.updateServiceRequestStatus(serviceRequest);
