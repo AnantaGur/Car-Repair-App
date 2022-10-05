@@ -90,7 +90,10 @@
           <tr class="rows">
             <p>Status of Request:</p>
             <span class="request-status" 
-            v-bind:style="[request.requestStatus == 'Completed' ? request.requestStatus == 'Declined' ? request.requestStatus == 'Accepted' ? {color: 'green'} : {color: 'red'}: {color: 'yellow'} : {color: 'black'}]">
+            v-bind:style="[request.requestStatus === 'Completed' ? {color: 'green'} : {color: 'black'} &&
+            request.requestStatus === 'Declined Order' ? {color: 'red'} : {color: 'black'} &&
+            request.requestStatus === 'Accepted' ? {color: 'skyblue'} : {color: 'black'}]"
+            >
             {{ request.requestStatus }}
             </span>
           </tr>
