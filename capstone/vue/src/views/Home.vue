@@ -10,7 +10,7 @@
       <table>
         <th>My Service Requests</th>
         <br />
-        <tr v-if="repairRequests == ''">
+        <tr v-if="repairRequests == ''" id="click-above">
           Click above to request a repair
         </tr>
         <tr>
@@ -28,14 +28,25 @@
               <span>{{ request.fullName }}</span>
             </div>
             <tr class="rows">
-              <p>Service Type:</p>
-              <span>{{ request.serviceName }}</span>
+              <p>Service Type</p>
+              <span class="request-status">{{ request.serviceName }}</span>
             </tr>
             <tr class="rows">
-              <p>Status of Request:</p>
-              <span v-bind:style="[request.requestStatus === 'Completed' ? {color: 'green'} : {color: 'black'} ||
-            request.requestStatus === 'Declined Order' ? {color: 'red'} : {color: 'black'} ||
-            request.requestStatus === 'Accepted' ? {color: 'skyblue'} : {color: 'black'}]">{{ request.requestStatus }}</span>
+              <p>Status of Request</p>
+              <span
+                v-bind:style="[
+                  request.requestStatus === 'Completed'
+                    ? { color: 'green' }
+                    : { color: 'black' } &&
+                      request.requestStatus === 'Declined Order'
+                    ? { color: 'red' }
+                    : { color: 'black' } && request.requestStatus === 'Accepted'
+                    ? { color: 'skyblue' }
+                    : { color: 'black' },
+                ]"
+                class="request-status"
+                >{{ request.requestStatus }}
+              </span>
             </tr>
             <div
               class="estimate"
@@ -62,18 +73,18 @@
                     <label for="parts-cost" class="estimate-labels"
                       >Parts Cost:</label
                     >
-                    <span>{{ estimate.partsCost }}</span>
+                    <span>${{ estimate.partsCost }}</span>
                     <label for="labor-cost" class="estimate-labels"
                       >Labor Cost:</label
                     >
-                    <span>{{ estimate.laborCost }}</span>
+                    <span>${{ estimate.laborCost }}</span>
                   </td>
                   <td>
                     <label for="total-cost" class="estimate-labels"
                       >Total Cost:</label
                     >
                     <span>
-                      {{
+                      ${{
                         parseInt(estimate.partsCost) +
                         parseInt(estimate.laborCost)
                       }}
@@ -246,8 +257,13 @@ table {
 }
 
 #estimate {
-  border: 2px solid black;
+  border: 3px solid black;
   border-radius: 20px;
+  box-shadow: 3px 5px grey;
+}
+
+#click-above {
+  margin-top: 20px;
 }
 
 .request-info {
@@ -262,6 +278,23 @@ table {
 
 .request-info span {
   margin: 10px;
+}
+
+.info {
+  color: white;
+  font-weight: 700;
+  box-shadow: 5px 6px rgba(87, 134, 236, 0.5);
+  background: linear-gradient(
+    90deg,
+    rgba(36, 35, 50, 1) 1%,
+    rgba(31, 136, 173, 0.9500175070028011) 56%,
+    rgba(91, 96, 0, 0.25253851540616246) 95%
+  );
+  text-shadow: 2px 2px black;
+  border-radius: 10px;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
 }
 
 .rows {
@@ -284,22 +317,6 @@ table {
   font-weight: bold;
 }
 
-.info {
-  color: white;
-  font-weight: 700;
-  box-shadow: 5px 6px rgba(87, 134, 236, 0.5);
-  background: linear-gradient(
-    90deg,
-    rgba(36, 35, 50, 1) 1%,
-    rgba(31, 136, 173, 0.9500175070028011) 56%,
-    rgba(91, 96, 0, 0.25253851540616246) 95%
-  );
-  text-shadow: 2px 2px black;
-  border-radius: 10px;
-  padding: 5px 10px;
-  text-transform: uppercase;
-  margin-bottom: 15px;
-}
 .accept-button {
   background-color: teal;
   color: white;
@@ -344,20 +361,24 @@ table th {
   margin-bottom: -50px;
 }
 
-@media (min-width: 600px) {
+.rows .request-status {
+  display: flex;
+}
+
+.estimate {
+  margin-top: 15px;
+}
+
+@media (min-width: 10px) {
   .home {
     background-image: url("../images/flow.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  position: absolute;
-  left: 0px;
-  width: 100%;
-  height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    height: 100%;
   }
-};
-
-/* .background-img {
-  background-attachment: fixed;
-} */
+}
 </style>

@@ -74,11 +74,4 @@ export default {
   padding-left: 35px;
 }
 
-/* .nav:hover {
-  color: white;
-  background-color: rgb(15, 15, 206);
-  padding: 5px;
-  border-radius: 5px;
-  opacity: .75;
-} */
 </style>

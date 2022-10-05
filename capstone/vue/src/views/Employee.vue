@@ -4,21 +4,7 @@
       <h1>Requests</h1>
       <form @submit.prevent="sendRepairService" class="employee-form">
         <label for="service-estimate">Service:</label>
-        <select
-          name="service-estimate"
-          id="service-estimate"
-          required
-          v-model="selected"
-          v-on:click="calculateParts"
-        >
-          <option disabled selected>Please select an option</option>
-          <option value="oil-change" id="oil-change">Oil Change</option>
-          <option value="brake-change" id="brake-change">Brake Change</option>
-          <option value="battery-change" id="battery-change">
-            Battery Change
-          </option>
-          <option value="tire-change" id="tire-change">Tire Change</option>
-        </select>
+        <span>{{ selected }}</span>
         <label for="total-time">Labor in Hours:</label>
         <input
           type="number"
@@ -84,11 +70,11 @@
         </div>
         <div class="service-info">
           <tr class="rows">
-            <p>Service Type:</p>
-            <span>{{ request.serviceName }}</span>
+            <p>Service Type</p>
+            <span class="request-status">{{ request.serviceName }}</span>
           </tr>
           <tr class="rows">
-            <p>Status of Request:</p>
+            <p>Status of Request</p>
             <span class="request-status" 
             v-bind:style="[request.requestStatus === 'Completed' ? {color: 'green'} : {color: 'black'} &&
             request.requestStatus === 'Declined Order' ? {color: 'red'} : {color: 'black'} &&
@@ -106,21 +92,25 @@
               request.requestId !== newRepairEstimateForm.requestId &&
               request.requestStatus == 'Pending Technician Review'
             "
-            v-on:click="(isChecked = true), sendEstimate(request.requestId)"
+            v-on:click="(isChecked = true), sendEstimate(request.requestId, request.serviceName),
+            calculateParts()"
             class="select-button"
           >
             Select Order
           </button>
           <button
             v-on:click="
-              (isChecked = false), (newRepairEstimateForm.requestId = '')
+              (isChecked = false), (newRepairEstimateForm.requestId = ''), 
+              (selected = ''), (newRepairEstimateForm.partsCost = '')
             "
             v-if="request.requestId === newRepairEstimateForm.requestId && isChecked === true"
             class="deselect-button"
           >
             Deselect Order
           </button>
-          <button v-if="request.requestStatus === 'Accepted'" v-on:click="completedRequest(request.requestId)" class="completed-button">Complete</button>
+          <button v-if="request.requestStatus === 'Accepted'" 
+          v-on:click="completedRequest(request.requestId)" 
+          class="completed-button">Complete</button>
         </div>
       </div>
     </div>
@@ -149,8 +139,10 @@ export default {
     };
   },
   methods: {
-    sendEstimate(id) {
+    sendEstimate(id, serviceName) {
       this.newRepairEstimateForm.requestId = id;
+      this.selected = serviceName;
+      console.log(serviceName)
     },
     statusChange() {
       let selection = document.querySelector("colorChange");
@@ -169,13 +161,13 @@ export default {
       this.newRepairEstimateForm.laborCost = total;
     },
     calculateParts() {
-      if (this.selected === "oil-change") {
+      if (this.selected === "Oil Change") {
         this.newRepairEstimateForm.partsCost = "45.00";
-      } else if (this.selected === "brake-change") {
+      } else if (this.selected === "Brake Change") {
         this.newRepairEstimateForm.partsCost = "60.00";
-      } else if (this.selected === "battery-change") {
+      } else if (this.selected === "Battery Change") {
         this.newRepairEstimateForm.partsCost = "115.00";
-      } else if (this.selected === "tire-change") {
+      } else if (this.selected === "Tire Change") {
         this.newRepairEstimateForm.partsCost = "70.00";
       }
     },
@@ -294,6 +286,7 @@ export default {
 
 .rows p {
   font-weight: bold;
+  text-decoration: underline;
 }
 
 .employee-info {
@@ -379,7 +372,20 @@ export default {
 }
 
 .completed-button {
-  background-color: rgba(0, 128, 128, 0.822);
+   background: linear-gradient(
+    90deg,
+    rgba(36, 35, 50, 1) 1%,
+    rgba(31, 136, 173, 0.9500175070028011) 56%,
+    rgba(91, 96, 0, 0.25253851540616246) 95%
+  );
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+}
+
+.completed-button:hover {
+  background-color: teal;
   color: white;
   border-radius: 10px;
   padding: 6px 13px;
@@ -388,10 +394,17 @@ export default {
 }
 
 .request-status {
-  font-weight: 700;
+  border: 2px solid black;
+  box-shadow: 3px 5px grey;
+  padding: 8px 40px 8px 40px;
+  text-align: center;
+  margin: 20px;
+  border-radius: 5px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  margin-top: 40px;
+  font-weight: 600;
 }
-
-/* .colorChange {
-  background-color: blueviolet;
-} */
 </style>
