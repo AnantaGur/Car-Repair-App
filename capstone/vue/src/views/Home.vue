@@ -40,28 +40,41 @@
               v-for="estimate in repairEstimate"
               :key="estimate.id"
             >
-              <div v-if="request.requestId === estimate.requestId" id="estimate">
+              <div
+                v-if="request.requestId === estimate.requestId"
+                id="estimate"
+              >
                 <tr class="rows">
-                  <label for="your-estimate" class="your-estimate">Your Estimate</label>
+                  <label for="your-estimate" class="your-estimate"
+                    >Your Estimate</label
+                  >
                   <td>
                     <label for="date" class="estimate-labels">Date:</label>
-                  <span>{{ estimate.pickUpDate }}</span>
-                  <label for="pickup-time" class="estimate-labels">Pick Up Time:</label>
-                  <span>{{ estimate.pickUpTime }}</span>
+                    <span>{{ estimate.pickUpDate }}</span>
+                    <label for="pickup-time" class="estimate-labels"
+                      >Pick Up Time:</label
+                    >
+                    <span>{{ estimate.pickUpTime }}</span>
                   </td>
                   <td>
-                    <label for="parts-cost" class="estimate-labels">Parts Cost:</label>
-                  <span>{{ estimate.partsCost }}</span>
-                  <label for="labor-cost" class="estimate-labels">Labor Cost:</label>
-                  <span>{{ estimate.laborCost }}</span>
+                    <label for="parts-cost" class="estimate-labels"
+                      >Parts Cost:</label
+                    >
+                    <span>{{ estimate.partsCost }}</span>
+                    <label for="labor-cost" class="estimate-labels"
+                      >Labor Cost:</label
+                    >
+                    <span>{{ estimate.laborCost }}</span>
                   </td>
                   <td>
-                  <label for="total-cost" class="estimate-labels">Total Cost:</label>
-                  <span>
-                    {{
-                      parseInt(estimate.partsCost) +
-                      parseInt(estimate.laborCost)
-                    }}
+                    <label for="total-cost" class="estimate-labels"
+                      >Total Cost:</label
+                    >
+                    <span>
+                      {{
+                        parseInt(estimate.partsCost) +
+                        parseInt(estimate.laborCost)
+                      }}
                     </span>
                   </td>
                 </tr>
@@ -72,15 +85,23 @@
                 id="delete-request"
                 v-if="request.requestStatus === 'Pending Technician Review'"
                 v-on:click="deleteRequestCard(request.requestId)"
-                class="home-screen-buttons"
+                class="decline-button"
               >
                 Delete
               </button>
               <div v-if="request.requestStatus == 'Pending customer review'">
-                <button v-on:click="updateStatusAccept(request.requestId)" 
-                class="home-screen-buttons">Accept Order</button>
-                <button v-on:click="updateStatusDeclined(request.requestId)" 
-                class="home-screen-buttons">Decline Order</button>
+                <button
+                  v-on:click="updateStatusAccept(request.requestId)"
+                  class="accept-button"
+                >
+                  Accept Order
+                </button>
+                <button
+                  v-on:click="updateStatusDeclined(request.requestId)"
+                  class="decline-button"
+                >
+                  Decline Order
+                </button>
               </div>
             </tr>
           </div>
@@ -99,7 +120,7 @@ export default {
     return {
       repairRequests: [],
       repairEstimate: [],
-      requestId : ""
+      requestId: "",
     };
   },
   created() {
@@ -129,6 +150,7 @@ export default {
         return requestId.requestId === this.requestId;
       });
       request.requestStatus = "Declined Order";
+      console.log(request);
       repairService.updateServiceStatus(request).then((response) => {
         if (response.status === 200) {
           alert("Declined Order");
@@ -148,7 +170,7 @@ export default {
           location.reload();
         }
       });
-    }
+    },
   },
 };
 </script>
@@ -158,6 +180,12 @@ export default {
 
 .home {
   font-family: "Dosis", sans-serif;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
   background-image: url("../images/flow.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -165,13 +193,6 @@ export default {
   position: absolute;
   left: 0px;
   width: 100%;
-  height: 100vh;
-}
-
-.container {
-  display: flex;
-  align-items: center;
-  flex-flow: column;
 }
 
 .banner {
@@ -212,7 +233,6 @@ table {
   flex-flow: column;
   margin-top: 2vh;
   font-size: 32px;
-  
 }
 
 #banner-img {
@@ -236,7 +256,6 @@ table {
   margin: 20px;
   border-radius: 10px;
   background-color: rgb(255, 255, 255);
-  
 }
 
 .request-info span {
@@ -279,22 +298,33 @@ table {
   text-transform: uppercase;
   margin-bottom: 15px;
 }
-
-.home-screen-buttons {
-  background: linear-gradient(
-    90deg,
-    rgba(36, 35, 50, 1) 1%,
-    rgba(31, 136, 173, 0.9500175070028011) 56%,
-    rgba(91, 96, 0, 0.25253851540616246) 95%
-  );
+.accept-button {
+  background-color: teal;
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+  margin-right: 10px;
+}
+.decline-button {
+  background-color: rgb(214, 57, 57);
   color: white;
   border-radius: 10px;
   padding: 6px 13px;
   border: none;
 }
 
-.home-screen-buttons:hover {
+.accept-button:hover {
   background-color: rgba(0, 128, 128, 0.822);
+  color: white;
+  border-radius: 10px;
+  padding: 6px 13px;
+  border: none;
+  box-shadow: 3px 3px black;
+}
+
+.decline-button:hover {
+  background-color: rgba(214, 57, 57, 0.822);
   color: white;
   border-radius: 10px;
   padding: 6px 13px;
@@ -311,6 +341,19 @@ table {
 table th {
   margin-bottom: -50px;
 }
+
+@media (min-width: 600px) {
+  .home {
+    background-image: url("../images/flow.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  }
+};
 
 /* .background-img {
   background-attachment: fixed;
