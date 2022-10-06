@@ -47,6 +47,29 @@
           class="employee-input"
         />
       </form>
+      <div class="card-container">
+        <label for="dropdown">Filter Results:</label>
+        <select
+          name="dropdown_btn"
+          id="dropdown_menu"
+          v-model="dropdown"
+          v-on:change="changeDrop(dropdown)"
+        >
+        <option disabled selected id="select-option">
+            --Please select option--
+          </option>
+          <option value="All Request">All Request</option>
+          <option value="Pending Technician Review">
+            Pending Technician Review
+          </option>
+          <option value="Pending Customer Review">
+            Pending Customer Review
+          </option>
+          <option value="Accepted">Accepted</option>
+          <option value="Declined Order">Declined Order</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
       <div
         class="request"
         v-for="request in repairRequests"
@@ -75,12 +98,20 @@
           </tr>
           <tr class="rows">
             <p>Status of Request</p>
-            <span class="request-status" 
-            v-bind:style="[request.requestStatus === 'Completed' ? {color: 'green'} : {color: 'black'} &&
-            request.requestStatus === 'Declined Order' ? {color: 'red'} : {color: 'black'} &&
-            request.requestStatus === 'Accepted' ? {color: 'skyblue'} : {color: 'black'}]"
+            <span
+              class="request-status"
+              v-bind:style="[
+                request.requestStatus === 'Completed'
+                  ? { color: 'green' }
+                  : { color: 'black' } &&
+                    request.requestStatus === 'Declined Order'
+                  ? { color: 'red' }
+                  : { color: 'black' } && request.requestStatus === 'Accepted'
+                  ? { color: 'skyblue' }
+                  : { color: 'black' },
+              ]"
             >
-            {{ request.requestStatus }}
+              {{ request.requestStatus }}
             </span>
           </tr>
         </div>
@@ -92,25 +123,37 @@
               request.requestId !== newRepairEstimateForm.requestId &&
               request.requestStatus == 'Pending Technician Review'
             "
-            v-on:click="(isChecked = true), sendEstimate(request.requestId, request.serviceName),
-            calculateParts()"
+            v-on:click="
+              (isChecked = true),
+                sendEstimate(request.requestId, request.serviceName),
+                calculateParts()
+            "
             class="select-button"
           >
             Select Order
           </button>
           <button
             v-on:click="
-              (isChecked = false), (newRepairEstimateForm.requestId = ''), 
-              (selected = ''), (newRepairEstimateForm.partsCost = '')
+              (isChecked = false),
+                (newRepairEstimateForm.requestId = ''),
+                (selected = ''),
+                (newRepairEstimateForm.partsCost = '')
             "
-            v-if="request.requestId === newRepairEstimateForm.requestId && isChecked === true"
+            v-if="
+              request.requestId === newRepairEstimateForm.requestId &&
+              isChecked === true
+            "
             class="deselect-button"
           >
             Deselect Order
           </button>
-          <button v-if="request.requestStatus === 'Accepted'" 
-          v-on:click="completedRequest(request.requestId)" 
-          class="completed-button">Complete</button>
+          <button
+            v-if="request.requestStatus === 'Accepted'"
+            v-on:click="completedRequest(request.requestId)"
+            class="completed-button"
+          >
+            Complete
+          </button>
         </div>
       </div>
     </div>
@@ -135,14 +178,16 @@ export default {
       },
       repairRequests: [],
       isChecked: false,
-      requestId: ""
+      requestId: "",
+      dropDown: "",
+      newRequests: [],
     };
   },
   methods: {
     sendEstimate(id, serviceName) {
       this.newRepairEstimateForm.requestId = id;
       this.selected = serviceName;
-      console.log(serviceName)
+      console.log(serviceName);
     },
     statusChange() {
       let selection = document.querySelector("colorChange");
@@ -171,6 +216,32 @@ export default {
         this.newRepairEstimateForm.partsCost = "70.00";
       }
     },
+    changeDrop(id) {
+      console.log(id);
+      if (id === "Pending Technician Review") {
+        this.repairRequests = this.newRequests.filter((element) => {
+          return element.requestStatus === "Pending Technician Review";
+        });
+      } else if (id === "Completed") {
+        this.repairRequests = this.newRequests.filter((element) => {
+          return element.requestStatus === "Completed";
+        });
+      } else if (id === "Declined Order") {
+        this.repairRequests = this.newRequests.filter((element) => {
+          return element.requestStatus === "Declined Order";
+        });
+      } else if (id === "Accepted") {
+        this.repairRequests = this.newRequests.filter((element) => {
+          return element.requestStatus === "Accepted";
+        });
+      } else if (id === "Pending Customer Review") {
+        this.repairRequests = this.newRequests.filter((element) => {
+          return element.requestStatus === "Pending Customer Review";
+        });
+      } else if (id === "All Request") {
+        this.repairRequests = this.newRequests;
+      }
+    },
     sendRepairService() {
       repairService
         .sendServiceEstimate(this.newRepairEstimateForm)
@@ -191,7 +262,7 @@ export default {
       const request = this.repairRequests.find((requestId) => {
         return requestId.requestId === this.newRepairEstimateForm.requestId;
       });
-      request.requestStatus = "Pending customer review";
+      request.requestStatus = "Pending Customer Review";
       repairService.updateServiceStatus(request).then((response) => {
         if (response.status === 200) {
           alert("Estimate was sent");
@@ -200,7 +271,7 @@ export default {
       });
     },
     completedRequest(id) {
-        this.requestId = id;
+      this.requestId = id;
       const request = this.repairRequests.find((requestId) => {
         return requestId.requestId === this.requestId;
       });
@@ -211,15 +282,13 @@ export default {
           location.reload();
         }
       });
-    }
+    },
   },
   created() {
     repairService.getAllRepairs().then((response) => {
       this.repairRequests = response.data;
+      this.newRequests = response.data;
     });
-    if (this.request.requestStatus == 'Completed') {
-      document.getElementById('request-status').style.color ="green";
-    }
   },
 };
 </script>
@@ -244,6 +313,22 @@ export default {
 
 #service-estimate {
   border: 1px solid black;
+}
+
+.card-container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.card-container label {
+  font-weight: 600;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  padding: 3px 20px 3px 20px;
 }
 
 .employee-page {
@@ -294,7 +379,7 @@ export default {
   font-weight: 700;
   box-shadow: 0px 6px rgb(0, 0, 0);
   text-shadow: 2px 2px black;
-   background: linear-gradient(
+  background: linear-gradient(
     90deg,
     rgba(36, 35, 50, 1) 1%,
     rgba(31, 136, 173, 0.9500175070028011) 56%,
@@ -333,7 +418,7 @@ export default {
 }
 
 .select-button {
-   background: linear-gradient(
+  background: linear-gradient(
     90deg,
     rgba(36, 35, 50, 1) 1%,
     rgba(31, 136, 173, 0.9500175070028011) 56%,
@@ -372,7 +457,7 @@ export default {
 }
 
 .completed-button {
-   background: linear-gradient(
+  background: linear-gradient(
     90deg,
     rgba(36, 35, 50, 1) 1%,
     rgba(31, 136, 173, 0.9500175070028011) 56%,

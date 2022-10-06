@@ -102,7 +102,7 @@
               >
                 Delete
               </button>
-              <div v-if="request.requestStatus == 'Pending customer review'">
+              <div v-if="request.requestStatus == 'Pending Customer Review'">
                 <button
                   v-on:click="updateStatusAccept(request.requestId)"
                   class="accept-button"
