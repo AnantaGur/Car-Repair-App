@@ -25,12 +25,12 @@ public class RepairEstimateController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
     @RequestMapping(path = "/create_repair_estimate", method = RequestMethod.POST)
     public void createRequest (@RequestBody RepairEstimate repairEstimate){
         repairEstimateDao.createRepairEstimate(repairEstimate,repairEstimate.getRequestId());
     }
-    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
     @RequestMapping(path = "/get_repair_byId/{repairId}", method = RequestMethod.GET)
     public RepairEstimate getRepairById (@PathVariable int repairId){
         return repairEstimateDao.getRepairEstimate(repairId);

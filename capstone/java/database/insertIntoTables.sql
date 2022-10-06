@@ -26,27 +26,27 @@ VALUES
 insert into service_request
 (vehicle_make, vehicle_model, vehicle_color, vehicle_year, service_name, full_name, phone_number, email, user_id)
 VALUES
-('ford', 'mustang', 'red', 1990, 'oil change', 'Ananta', '1234567890', 'johndoe@gmail.com', 5);
+('ford', 'mustang', 'red', 1990, 'Oil Change', 'Ananta', '1234567890', 'johndoe@gmail.com', 5);
 
 insert into service_request
 (vehicle_make, vehicle_model, vehicle_color, vehicle_year, service_name, full_name, phone_number, email, user_id)
 VALUES
-('toyota', 'tacoma', 'black', 2022, 'engine change', 'Mitchell', '1234567890', 'te@gmail.com', 6);
+('toyota', 'tacoma', 'black', 2022, 'Brake Change', 'Mitchell', '1234567890', 'te@gmail.com', 6);
 
 insert into service_request
 (vehicle_make, vehicle_model, vehicle_color, vehicle_year, service_name, full_name, phone_number, email, user_id)
 VALUES
-('nissan', 'maxima', 'white', 2016, 'tire rotation', 'Ananta', '1234567890', 'nissan@gmail.com', 5);
+('nissan', 'maxima', 'white', 2016, 'Tire Change', 'Ananta', '1234567890', 'nissan@gmail.com', 5);
 
 insert into service_request
 (vehicle_make, vehicle_model, vehicle_color, vehicle_year, service_name, full_name, phone_number, email, user_id)
 VALUES
-('honda', 'civic', 'purple', 2014, 'transmission rotation', 'Mitchell', '1234567890', 'nissan@gmail.com', 6);
+('honda', 'civic', 'purple', 2014, 'Tire Change', 'Mitchell', '1234567890', 'nissan@gmail.com', 6);
 
 insert into service_request
 (vehicle_make, vehicle_model, vehicle_color, vehicle_year, service_name, full_name, phone_number, email, user_id)
 VALUES
-('nissan', 'xterra', 'grey', 2010, 'wipers change', 'gary moon', '1234567890', 'nissan@gmail.com', 4);
+('nissan', 'xterra', 'grey', 2010, 'Battery Change', 'Gary', '1234567890', 'nissan@gmail.com', 4);
 
 --insert into repair_estimate
 --(request_id, parts_cost, labor_cost, total_time, pick_up_date, pick_up_time)
